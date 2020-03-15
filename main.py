@@ -132,4 +132,4 @@ async def covid(ctx,country:str=None):
     except Exception as e:
       await ctx.send(str(e))
 
-client.run(process.env.Token)
+client.run('NTc2MTEzNjg5MzI1NzMxODky.Xm58Aw.uc9zjJGTGvQQQT-KloSTrtCwBMA')
