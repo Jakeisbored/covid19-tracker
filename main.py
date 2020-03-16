@@ -142,17 +142,18 @@ async def covid(ctx,country:str=None):
       labels = ''
       sizes = []
       colors = []
-      explode = ()
+      em = []
       if not check_length(results[country]['total_deaths']) == 'None':
         sizes.append(int(results[country]['total_deaths'].replace(',','')))
         colors.append('#ff5151')
-        explode = explode + (0)
+        em.append(0)
         labels = labels + 'Deaths'
       if not check_length(results[country]['total_recovered']) == 'None':
         sizes.append(int(results[country]['total_recovered'].replace(',','')))
         colors.append('#76ff46')
-        explode = explode + (,0)
+        em.append(0)
         labels = labels + ,'Cured'
+      explode = tuple(em)
       plt.pie(sizes, explode=explode, labels=labels, colors=colors, autopct='%1.0f%%')
       plt.axis('equal')
       plt.savefig('pie.png', bbox_inches='tight' , transparent=True)
