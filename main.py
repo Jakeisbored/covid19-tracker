@@ -131,7 +131,7 @@ async def covid(ctx,country:str=None):
         embed.set_thumbnail(url='https://cdn.discordapp.com/attachments/686666564589846625/688494381027688480/caution-icon-png-14-original.png')
         #file = discord.File("pie.png", filename="image.png")
         #embed.set_image(url="attachment://image.png")
-        await ctx.send(file=file,embed=embed)
+        await ctx.send(embed=embed)
         return
       c = []
       countries = get_infected_countries()
@@ -154,7 +154,7 @@ async def covid(ctx,country:str=None):
       embed.set_thumbnail(url='https://cdn.discordapp.com/attachments/686666564589846625/688494381027688480/caution-icon-png-14-original.png')
       #sfile = discord.File("spie.png", filename="simage.png")
       #embed.set_image(url="attachment://simage.png")
-      await ctx.send(embed=embed,file=sfile)
+      await ctx.send(embed=embed)
     except Exception as e:
       await ctx.send(str(e))
 
