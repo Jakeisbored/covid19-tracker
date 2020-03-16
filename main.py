@@ -1,6 +1,6 @@
 from bs4 import BeautifulSoup
 import requests
-
+import matplotlib.pyplot as plt
 main_endpoint = 'https://www.worldometers.info/coronavirus/{}'
 def get_infections():
   url = main_endpoint.format('#countries')
@@ -117,7 +117,6 @@ async def covid(ctx,country:str=None):
     try:
       if(country == None):
         results= get_infections()
-        import matplotlib.pyplot as plt
         plt.rcParams.update({'text.color' : "white",'axes.labelcolor' : "white"})
         labels = 'Deaths', 'Cured' , 'Mid condition'
         sizes = [int(results['worldwide_cases']['total_cases']['deaths'].replace(',','')),int(results['worldwide_cases']['total_cases']['cured'].replace(',','')),int(results['worldwide_cases']['total_cases']['active_cases']['mid_condition'].replace(',',''))]
@@ -140,9 +139,17 @@ async def covid(ctx,country:str=None):
             c.append(countr)
       country = None if len(c) < 1 else c[0]
       results = get_infections_by_name(country)
+      fig = plt.figure()
+      ax = fig.add_axes([0,0,1,1])
+      types = ['Deaths', 'Cured']
+      values = [results[country]['total_deaths'] if not check_length(results[country]['total_deaths']) == 'None' else 0,results[country]['total_recovered'] if not check_length(results[country]['total_recovered']) == 'None' else 0]
+      ax.bar(types,values)
+      plt.savefig('bar.png', bbox_inches='tight' , transparent=True)
       embed=discord.Embed(title="Infections in {}".format(country),description='**Total** : {}  \n **Deaths** : {} \n **Cured** : {} \n **New cases** : {} \n **Critical cases** : {} \n **New deaths** : {} \n **Active cases** : {}'.format(check_length(results[country]['total_cases']),check_length(results[country]['total_deaths'],format(int(results[country]['total_deaths'].replace(',',''))*100/int(results[country]['total_cases'].replace(',','')),'.2f') if not check_length(results[country]['total_deaths']) == 'None' else None),check_length(results[country]['total_recovered'],format(int(results[country]['total_recovered'].replace(',',''))*100/int(results[country]['total_cases'].replace(',','')),'.2f') if not check_length(results[country]['total_recovered']) == 'None' else None),check_length(results[country]['new_cases'],format(int(results[country]['new_cases'].replace(',','').replace('+',''))*100/int(results[country]['total_cases'].replace(',','')),'.2f') if not check_length(results[country]['new_cases']) == 'None' else None,True),check_length(results[country]['critical_cases'],format(int(results[country]['critical_cases'].replace(',',''))*100/int(results[country]['total_cases'].replace(',','')),'.2f') if not check_length(results[country]['critical_cases']) == 'None' else None),check_length(results[country]['new_deaths'],format(int(results[country]['new_deaths'].replace(',','').replace('+',''))*100/int(results[country]['total_deaths'].replace(',','')),'.2f') if not check_length(results[country]['new_deaths']) == 'None' else None,True),check_length(results[country]['active_cases'],format(int(results[country]['active_cases'].replace(',',''))*100/int(results[country]['total_cases'].replace(',','')),'.2f') if not check_length(results[country]['active_cases']) == 'None' else None)) ,  color=discord.Colour(value=16730698))
       embed.set_footer(text=cr,icon_url=client.user.avatar_url)
       embed.set_thumbnail(url='https://cdn.discordapp.com/attachments/686666564589846625/688494381027688480/caution-icon-png-14-original.png')
+      file = discord.File("bar.png", filename="image.png")
+      embed.set_image(url="attachment://image.png")
       await ctx.send(embed=embed)
     except Exception as e:
       await ctx.send(str(e))
