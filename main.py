@@ -123,14 +123,14 @@ async def covid(ctx,country:str=None):
         sizes = [int(results['worldwide_cases']['total_cases']['deaths'].replace(',','')),int(results['worldwide_cases']['total_cases']['cured'].replace(',','')),int(results['worldwide_cases']['total_cases']['active_cases']['mid_condition'].replace(',',''))]
         colors = ['#ff5151', '#76ff46' , 'orange']
         explode = (0, 0 , 0) 
-        #plt.pie(sizes, explode=explode, labels=labels, colors=colors, autopct='%1.0f%%')
-        #plt.axis('equal')
-        #plt.savefig('pie.png', bbox_inches='tight' , transparent=True)
+        plt.pie(sizes, explode=explode, labels=labels, colors=colors, autopct='%1.0f%%')
+        plt.axis('equal')
+        plt.savefig('pie.png', bbox_inches='tight' , transparent=True)
         embed=discord.Embed(title="Infections worldwide",description='**Total** : {}  \n **Deaths** : {} \n **Cured** : {} \n **Active Cases** : \n > Mid Condition : {} \n > Critical condition : {}'.format(check_length(results['worldwide_cases']['total_cases']['infected']),check_length(results['worldwide_cases']['total_cases']['deaths'],format(int(results['worldwide_cases']['total_cases']['deaths'].replace(',',''))*100/int(results['worldwide_cases']['total_cases']['infected'].replace(',','')),'.2f') if not check_length(results['worldwide_cases']['total_cases']['deaths']) == 'None' else None),check_length(results['worldwide_cases']['total_cases']['cured'],format(int(results['worldwide_cases']['total_cases']['cured'].replace(',',''))*100/int(results['worldwide_cases']['total_cases']['infected'].replace(',','')),'.2f') if not check_length(results['worldwide_cases']['total_cases']['cured']) == 'None' else None),check_length(results['worldwide_cases']['total_cases']['active_cases']['mid_condition'],format(int(results['worldwide_cases']['total_cases']['active_cases']['mid_condition'].replace(',',''))*100/int(results['worldwide_cases']['total_cases']['infected'].replace(',','')),'.2f') if not check_length(results['worldwide_cases']['total_cases']['active_cases']['mid_condition']) == 'None' else None),check_length(results['worldwide_cases']['total_cases']['active_cases']['critical_condition'],format(int(results['worldwide_cases']['total_cases']['active_cases']['critical_condition'].replace(',',''))*100/int(results['worldwide_cases']['total_cases']['infected'].replace(',','')),'.2f') if not check_length(results['worldwide_cases']['total_cases']['active_cases']['critical_condition']) == 'None' else None)) ,  color=discord.Colour(value=16730698))
         embed.set_footer(text=cr,icon_url=client.user.avatar_url)
         embed.set_thumbnail(url='https://cdn.discordapp.com/attachments/686666564589846625/688494381027688480/caution-icon-png-14-original.png')
-        #file = discord.File("pie.png", filename="image.png")
-        #embed.set_image(url="attachment://image.png")
+        file = discord.File("pie.png", filename="image.png")
+        embed.set_image(url="attachment://image.png")
         await ctx.send(embed=embed)
         return
       c = []
@@ -140,20 +140,11 @@ async def covid(ctx,country:str=None):
             c.append(countr)
       country = None if len(c) < 1 else c[0]
       results = get_infections_by_name(country)
-      import matplotlib.pyplot as splt
-      splt.rcParams.update({'text.color' : "white",'axes.labelcolor' : "white"})
-      #sizes = [int(results[country]['total_deaths'].replace(',','')),int(results[country]['total_recovered'].replace(',',''))]
-      colors = ['#ff5151','#76ff46']
-      labels = ['Deaths','Cured']
-      explode = (0,0)
-      #splt.pie(sizes, explode=explode, labels=labels, colors=colors, autopct='%1.0f%%')
-      #splt.axis('equal')
-      #splt.savefig('spie.png', bbox_inches='tight' , transparent=True)
       embed=discord.Embed(title="Infections in {}".format(country),description='**Total** : {}  \n **Deaths** : {} \n **Cured** : {} \n **New cases** : {} \n **Critical cases** : {} \n **New deaths** : {} \n **Active cases** : {}'.format(check_length(results[country]['total_cases']),check_length(results[country]['total_deaths'],format(int(results[country]['total_deaths'].replace(',',''))*100/int(results[country]['total_cases'].replace(',','')),'.2f') if not check_length(results[country]['total_deaths']) == 'None' else None),check_length(results[country]['total_recovered'],format(int(results[country]['total_recovered'].replace(',',''))*100/int(results[country]['total_cases'].replace(',','')),'.2f') if not check_length(results[country]['total_recovered']) == 'None' else None),check_length(results[country]['new_cases'],format(int(results[country]['new_cases'].replace(',','').replace('+',''))*100/int(results[country]['total_cases'].replace(',','')),'.2f') if not check_length(results[country]['new_cases']) == 'None' else None,True),check_length(results[country]['critical_cases'],format(int(results[country]['critical_cases'].replace(',',''))*100/int(results[country]['total_cases'].replace(',','')),'.2f') if not check_length(results[country]['critical_cases']) == 'None' else None),check_length(results[country]['new_deaths'],format(int(results[country]['new_deaths'].replace(',','').replace('+',''))*100/int(results[country]['total_deaths'].replace(',','')),'.2f') if not check_length(results[country]['new_deaths']) == 'None' else None,True),check_length(results[country]['active_cases'],format(int(results[country]['active_cases'].replace(',',''))*100/int(results[country]['total_cases'].replace(',','')),'.2f') if not check_length(results[country]['active_cases']) == 'None' else None)) ,  color=discord.Colour(value=16730698))
       embed.set_footer(text=cr,icon_url=client.user.avatar_url)
       embed.set_thumbnail(url='https://cdn.discordapp.com/attachments/686666564589846625/688494381027688480/caution-icon-png-14-original.png')
-      #sfile = discord.File("spie.png", filename="simage.png")
-      #embed.set_image(url="attachment://simage.png")
+      sfile = discord.File("spie.png", filename="simage.png")
+      embed.set_image(url="attachment://simage.png")
       await ctx.send(embed=embed)
     except Exception as e:
       await ctx.send(str(e))
