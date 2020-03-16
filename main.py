@@ -139,7 +139,6 @@ async def covid(ctx,country:str=None):
             c.append(countr)
       country = None if len(c) < 1 else c[0]
       results = get_infections_by_name(country)
-      labels = ''
       sizes = []
       colors = []
       em = []
@@ -147,12 +146,13 @@ async def covid(ctx,country:str=None):
         sizes.append(int(results[country]['total_deaths'].replace(',','')))
         colors.append('#ff5151')
         em.append(0)
-        labels = labels + 'Deaths'
+        deaths = 'Deaths'
       if not check_length(results[country]['total_recovered']) == 'None':
         sizes.append(int(results[country]['total_recovered'].replace(',','')))
         colors.append('#76ff46')
         em.append(0)
-        labels = labels + ,'Cured'
+        cured = 'Cured'
+      labels = deaths , cured
       explode = tuple(em)
       plt.pie(sizes, explode=explode, labels=labels, colors=colors, autopct='%1.0f%%')
       plt.axis('equal')
