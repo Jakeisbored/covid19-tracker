@@ -142,7 +142,7 @@ async def covid(ctx,country:str=None):
       results = get_infections_by_name(country)
       import matplotlib.pyplot as splt
       splt.rcParams.update({'text.color' : "white",'axes.labelcolor' : "white"})
-      sizes = [int(results[country]['total_deaths'].replace(',','')) if chke,int(results[country]['total_recovered'].replace(',',''))]
+      #sizes = [int(results[country]['total_deaths'].replace(',','')),int(results[country]['total_recovered'].replace(',',''))]
       colors = ['#ff5151','#76ff46']
       labels = ['Deaths','Cured']
       explode = (0,0)
