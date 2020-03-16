@@ -116,7 +116,23 @@ async def search_country(ctx,search_args:str=None):
 async def covid(ctx,country:str=None):
     try:
       if(country == None):
-        await ctx.send('Specify a country bitch')
+        results= get_infections()
+        import matplotlib.pyplot as plt
+        plt.rcParams.update({'text.color' : "white",
+                     'axes.labelcolor' : "white"})
+        labels = 'Deaths', 'Cured' , 'Mid condition'
+        sizes = [int(results['worldwide_cases']['total_cases']['deaths'].replace(',','')),int(results['worldwide_cases']['total_cases']['cured'].replace(',','')),int(results['worldwide_cases']['total_cases']['active_cases']['mid_condition'].replace(',',''))]
+        colors = ['#ff5151', '#76ff46' , 'orange']
+        explode = (0, 0 , 0) 
+        plt.pie(sizes, explode=explode, labels=labels, colors=colors)
+        plt.axis('equal')
+        plt.savefig('pie.png', bbox_inches='tight' , transparent=True)
+        embed=discord.Embed(title="Infections worldwide",description='**Total** : {}  \n **Deaths** : {} \n **Cured** : {} \n **Active Cases** : \n > Mid Condition : {} \n > Critical condition : {}'.format(check_length(results['worldwide_cases']['total_cases']['infected']),check_length(results['worldwide_cases']['total_cases']['deaths'],format(int(results['worldwide_cases']['total_cases']['deaths'].replace(',',''))*100/int(results['worldwide_cases']['total_cases']['infected'].replace(',','')),'.2f') if not check_length(results['worldwide_cases']['total_cases']['deaths']) == 'None' else None),check_length(results['worldwide_cases']['total_cases']['cured'],format(int(results['worldwide_cases']['total_cases']['cured'].replace(',',''))*100/int(results['worldwide_cases']['total_cases']['infected'].replace(',','')),'.2f') if not check_length(results['worldwide_cases']['total_cases']['cured']) == 'None' else None),check_length(results['worldwide_cases']['total_cases']['active_cases']['mid_condition'],format(int(results['worldwide_cases']['total_cases']['active_cases']['mid_condition'].replace(',',''))*100/int(results['worldwide_cases']['total_cases']['infected'].replace(',','')),'.2f') if not check_length(results['worldwide_cases']['total_cases']['active_cases']['mid_condition']) == 'None' else None),check_length(results['worldwide_cases']['total_cases']['active_cases']['critical_condition'],format(int(results['worldwide_cases']['total_cases']['active_cases']['critical_condition'].replace(',',''))*100/int(results['worldwide_cases']['total_cases']['infected'].replace(',','')),'.2f') if not check_length(results['worldwide_cases']['total_cases']['active_cases']['critical_condition']) == 'None' else None)) ,  color=discord.Colour(value=16730698))
+        embed.set_footer(text=cr,icon_url=client.user.avatar_url)
+        embed.set_thumbnail(url='https://cdn.discordapp.com/attachments/686666564589846625/688494381027688480/caution-icon-png-14-original.png')
+        file = discord.File("pie.png", filename="image.png")
+        embed.set_image(url="attachment://image.png")
+        await ctx.send(file=file,embed=embed)
         return
       c = []
       countries = get_infected_countries()
@@ -132,4 +148,4 @@ async def covid(ctx,country:str=None):
     except Exception as e:
       await ctx.send(str(e))
 
-client.run('NTc2MTEzNjg5MzI1NzMxODky.Xm58Aw.uc9zjJGTGvQQQT-KloSTrtCwBMA')
+client.run('NTc2MTEzNjg5MzI1NzMxODky.Xm96Aw.TcQZx4WcGY3B_dXf8Fd4GMA3nRo')
