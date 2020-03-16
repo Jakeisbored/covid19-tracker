@@ -144,20 +144,19 @@ async def covid(ctx,country:str=None):
       splt.rcParams.update({'text.color' : "white",'axes.labelcolor' : "white"})
       sizes = []
       colors = []
-      deaths = ''
-      cured = ''
+      labels = []
       em = []
       if not check_length(results[country]['total_deaths']) == 'None':
         sizes.append(int(results[country]['total_deaths'].replace(',','')))
         colors.append('#ff5151')
         em.append(0)
-        deaths = 'Deaths'
+        labels.append('Deaths')
       if not check_length(results[country]['total_recovered']) == 'None':
         sizes.append(int(results[country]['total_recovered'].replace(',','')))
         colors.append('#76ff46')
         em.append(0)
-        cured = 'Cured'
-      labels = deaths , cured
+        labels.append('Cured')
+      
       explode = tuple(em)
       splt.pie(sizes, explode=explode, labels=labels, colors=colors, autopct='%1.0f%%')
       splt.axis('equal')
