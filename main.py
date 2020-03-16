@@ -150,7 +150,7 @@ async def covid(ctx,country:str=None):
       embed.set_thumbnail(url='https://cdn.discordapp.com/attachments/686666564589846625/688494381027688480/caution-icon-png-14-original.png')
       file = discord.File("bar.png", filename="image.png")
       embed.set_image(url="attachment://image.png")
-      await ctx.send(embed=embed)
+      await ctx.send(embed=embed,file=file)
     except Exception as e:
       await ctx.send(str(e))
 
