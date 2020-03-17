@@ -73,7 +73,7 @@ async def covid(ctx,country:str=None):
       await ctx.send(str(e))
 @client.command(brief='Get latest info about COVID19 (Updates every 24 hours)',description='Get latest info about COVID19 (Updates every 24 hours)')
 async def latest_news(ctx):
-    embed=discord.Embed(title="COVID19 Latest news" , description=f"**{get_latest_info()}**")
+    embed=discord.Embed(title="COVID19 Latest news" , description=f"**{get_latest_info().info.replace('\xa0','\n').replace('[source]','')}**",  color=discord.Colour(value=16730698))
     embed.set_footer(text=cr,icon_url=client.user.avatar_url)
     await ctx.send(embed=embed)
 client.run('NTc2MTEzNjg5MzI1NzMxODky.Xm96Aw.TcQZx4WcGY3B_dXf8Fd4GMA3nRo')
