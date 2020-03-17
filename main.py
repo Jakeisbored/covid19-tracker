@@ -30,6 +30,12 @@ async def search_country(ctx,search_args:str=None):
 
         await ctx.send(embed=embed) 
         return  
+@client.command(brief='Get symptoms of COVID19',description='Get symptoms of COVID19')
+async def symptoms(ctx):
+    embed=discord.Embed(title="COVID19 Symptoms")
+    embed.set_footer(text=cr,icon_url=client.user.avatar_url)
+    embed.set_image(url=https://www.worldometers.info/img/coronavirus--symptoms-table-wang-jama-02072020-reduced.png')
+    await ctx.send(embed=embed)
 @client.command(brief='Get infections in a specific country',description='Get infections in a specific country')
 async def covid(ctx,country:str=None):
     try:
