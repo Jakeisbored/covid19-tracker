@@ -1,7 +1,17 @@
 from bs4 import BeautifulSoup
 import requests
-
 main_endpoint = 'https://www.worldometers.info/coronavirus/{}'
+def get_latest_info():
+  url = main_endpoint.format('')
+  HTML = requests.get(url).content
+  soup = BeautifulSoup(HTML,'html.parser')
+  from datetime import datetime
+  x = 'newsdate'+datetime.today().strftime('%Y-%m-%d')
+  info = soup.find('div' , {"id":x}).getText()
+  return {
+    'info' : info,
+    'date' : datetime.today().strftime('%Y-%m-%d')
+  }
 def get_infections():
   url = main_endpoint.format('#countries')
   HTML = requests.get(url).content
