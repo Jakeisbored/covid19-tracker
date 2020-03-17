@@ -1,4 +1,4 @@
-from covid import get_infections , get_infections_by_name , get_infected_countries , check_length
+from covid import get_infections , get_infections_by_name , get_infected_countries , check_length , get_latest_info
 import discord
 from discord.ext import commands
 client = commands.Bot(command_prefix='c!', description='A COVID19 tracking bot' , activity=discord.Activity(type=discord.ActivityType.watching, name="corona updates"))
@@ -71,5 +71,9 @@ async def covid(ctx,country:str=None):
       return
     except Exception as e:
       await ctx.send(str(e))
-
+@client.command(brief='Get latest info about COVID19 (Updates every 24 hours)',description='Get latest info about COVID19 (Updates every 24 hours)')
+async def latest_news(ctx):
+    embed=discord.Embed(title="COVID19 Latest news" , description=f"**{get_latest_info()}**")
+    embed.set_footer(text=cr,icon_url=client.user.avatar_url)
+    await ctx.send(embed=embed)
 client.run('NTc2MTEzNjg5MzI1NzMxODky.Xm96Aw.TcQZx4WcGY3B_dXf8Fd4GMA3nRo')
