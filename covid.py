@@ -1,6 +1,47 @@
 from bs4 import BeautifulSoup
 import requests
 main_endpoint = 'https://www.worldometers.info/coronavirus/{}'
+def get_stats(type):
+  if(type == 'deaths'):
+    url = main_endpoint.format('coronavirus-death-toll/')
+    HTML = requests.get(url).content
+    soup = BeautifulSoup(HTML,'html.parser')
+    data = {
+      'overall' : soup.select_one('p').getText(),
+      'death_log' : {
+        'total' : {
+
+        },
+        'daily' : {
+
+        }
+      }
+    }
+    table_children = soup.find_all('tbody')[0].find_all('tr')
+    for child in table_children:
+      for index,td in enumerate(child.find_all('td')):
+        if index == 0:
+          key = td.getText().replace('\xa0','').strip()
+          data['death_log']['total'][key] = {}
+        elif index == 1:
+          data['death_log']['total'][key]['total_deaths'] = td.getText()
+        elif index == 2:
+          data['death_log']['total'][key]['total_change'] = td.getText()
+        elif index == 3:
+          data['death_log']['total'][key]['total_change_percentage'] = td.getText()
+    table_children1 = soup.find_all('tbody')[1].find_all('tr')
+    for child in table_children1:
+      for index,td in enumerate(child.find_all('td')):
+        if index == 0:
+          key = td.getText().replace('\xa0','').strip()
+          data['death_log']['daily'][key] = {}
+        elif index == 1:
+          data['death_log']['daily'][key]['total_deaths'] = td.getText()
+        elif index == 2:
+          data['death_log']['daily'][key]['total_change'] = td.getText()
+        elif index == 3:
+          data['death_log']['daily'][key]['total_change_percentage'] = td.getText()
+    return data
 def get_latest_info():
   url = main_endpoint.format('')
   HTML = requests.get(url).content
