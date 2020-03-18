@@ -78,7 +78,7 @@ async def latest_news(ctx):
       embed.set_footer(text=cr,icon_url=client.user.avatar_url)
       num = 1
       for chunk in out:
-        embed.add_field('Part {}'.format(num),"**{}**".format(chunk.replace('\xa0','\n').replace('[source]','')))
+        embed.add_field(name='Part {}'.format(num),value="**{}**".format(chunk.replace('\xa0','\n').replace('[source]','')))
         num = num + 1
       await ctx.send(embed=embed)
 client.run('NTc2MTEzNjg5MzI1NzMxODky.Xm96Aw.TcQZx4WcGY3B_dXf8Fd4GMA3nRo')
