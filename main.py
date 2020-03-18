@@ -89,7 +89,7 @@ async def death_log(ctx):
   for day in get_stats('deaths')['death_log']['daily']:
     days.append(int(get_stats('deaths')['death_log']['daily'][day]['total_deaths'].replace(',','')))
   import matplotlib.pyplot as plt
-  plt.rcParams.update({'text.color' : "white",'axes.labelcolor' : "white"})
+  plt.rcParams.update({'text.color' : "white",'axes.labelcolor' : "white",'axes.color' : "white"})
   plt.plot(days,days, color='red')
   plt.xlabel('Days')
   plt.ylabel('Daily deaths')
@@ -99,5 +99,5 @@ async def death_log(ctx):
   embed=discord.Embed(description="This simple **chart** represents the daily deaths in the last days , You can recieve the data in dms with appending **-dms** to the arg",  color=discord.Colour(value=16730698))
   embed.set_image(url="attachment://line.png")
   embed.set_footer(text=cr,icon_url=client.user.avatar_url)
-  await ctx.send(file=file)
+  await ctx.send(embed=embed,file=file)
 client.run('NTc2MTEzNjg5MzI1NzMxODky.Xm96Aw.TcQZx4WcGY3B_dXf8Fd4GMA3nRo')
