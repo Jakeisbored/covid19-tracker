@@ -76,7 +76,9 @@ async def latest_news(ctx):
       out = [(get_latest_info()['info'][i:i+2048]) for i in range(0, len(get_latest_info()['info']), 2048)]
       embed=discord.Embed(title="COVID19 Latest news : {}".format(get_latest_info()['date']),  color=discord.Colour(value=16730698))
       embed.set_footer(text=cr,icon_url=client.user.avatar_url)
-      for (chunk,index) in out:
-        embed.add_field('Part {}'.format(index+1),"**{}**".format(chunk.replace('\xa0','\n').replace('[source]','')))
+      num = 1
+      for chunk in out:
+        embed.add_field('Part {}'.format(num),"**{}**".format(chunk.replace('\xa0','\n').replace('[source]','')))
+        num = num + 1
       await ctx.send(embed=embed)
 client.run('NTc2MTEzNjg5MzI1NzMxODky.Xm96Aw.TcQZx4WcGY3B_dXf8Fd4GMA3nRo')
