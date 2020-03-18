@@ -87,7 +87,7 @@ async def latest_news(ctx):
 async def death_log(ctx):
   days = []
   for i in get_stats('deaths')['death_log']['daily']:
-    days.append(i['total_deaths'])
+    days.append(int(i['total_deaths'].replace(',','')))
   plt.plot(days,days, color='g')
   plt.xlabel('Days')
   plt.ylabel('Daily deaths')
