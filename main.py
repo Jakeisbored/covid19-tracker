@@ -88,6 +88,7 @@ async def death_log(ctx):
   days = []
   for day in get_stats('deaths')['death_log']['daily']:
     days.append(int(get_stats('deaths')['death_log']['daily'][day]['total_deaths'].replace(',','')))
+  import matplotlib.pyplot as plt
   plt.plot(days,days, color='g')
   plt.xlabel('Days')
   plt.ylabel('Daily deaths')
