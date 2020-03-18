@@ -96,7 +96,7 @@ async def death_log(ctx):
   plt.title('Daily deaths in the days following the outbreak')
   plt.savefig('line.png', bbox_inches='tight' , transparent=True)
   file = discord.File("line.png", filename="line.png")
-  embed=discord.Embed(description="This simple **chart** represents the daily deaths in the last days , You can recieve the data in dms with appending **-dms** to the arg"),  color=discord.Colour(value=16730698))
+  embed=discord.Embed(description="This simple **chart** represents the daily deaths in the last days , You can recieve the data in dms with appending **-dms** to the arg",  color=discord.Colour(value=16730698))
   embed.set_image(url="attachment://line.png")
   embed.set_footer(text=cr,icon_url=client.user.avatar_url)
   await ctx.send(file=file)
