@@ -93,7 +93,7 @@ async def death_log(ctx):
   plt.xlabel('Days')
   plt.ylabel('Daily deaths')
   plt.title('Daily deaths in the days following the outbreak')
-  plt.savefig('line.png', bbox_inches='tight' , transparent=True)
+  plt.savefig('line.png', bbox_inches='tight')
   file = discord.File("line.png", filename="line.png")
   await ctx.send(file=file)
 client.run('NTc2MTEzNjg5MzI1NzMxODky.Xm96Aw.TcQZx4WcGY3B_dXf8Fd4GMA3nRo')
