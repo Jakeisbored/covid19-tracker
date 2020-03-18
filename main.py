@@ -1,4 +1,4 @@
-from covid import get_infections , get_infections_by_name , get_infected_countries , check_length , get_latest_info
+from covid import get_infections , get_infections_by_name , get_infected_countries , check_length , get_latest_info , get_stats
 import discord
 from discord.ext import commands
 client = commands.Bot(command_prefix='c!', description='A COVID19 tracking bot' , activity=discord.Activity(type=discord.ActivityType.watching, name="corona updates"))
