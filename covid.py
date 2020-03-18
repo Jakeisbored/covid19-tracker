@@ -57,12 +57,12 @@ def get_infections():
   url = main_endpoint.format('#countries')
   HTML = requests.get(url).content
   soup = BeautifulSoup(HTML,'html.parser')
-  table_children = soup.select_one('#main_table_countries > tbody:nth-child(2)').find_all("tr")
+  table_children = soup.find('tbody').find_all("tr")
   infections = {}
   for child in table_children :
     for index,td in enumerate(child.find_all('td')):
       if(index == 0):
-        country_key = td.getText().lstrip(' ').rstrip(' ')
+        country_key = td.getText().strip()
         infections[country_key] = {
             'total_cases' : '',
             'new_cases' : '',
