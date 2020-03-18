@@ -85,9 +85,10 @@ async def latest_news(ctx):
           await ctx.send(embed=embed)
 @client.command(brief='Get the deaths log starting from the outbreak day',description='Get the deaths log starting from the outbreak day')
 async def death_log(ctx):
-  days = [for i in get_stats('deaths')['daily']]
-  deaths = [for i in get_stats('deaths')['daily']['total_deaths']]
-  plt.plot(days,deaths, color='g')
+  days = []
+  for i in get_stats('deaths')['daily']:
+    days.append(i['total_deaths'])
+  plt.plot(days,days, color='g')
   plt.xlabel('Days')
   plt.ylabel('Daily deaths')
   plt.title('Daily deaths in the days following the outbreak')
