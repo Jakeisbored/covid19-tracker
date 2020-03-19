@@ -87,11 +87,14 @@ async def latest_news(ctx):
 async def death_log(ctx,type:str):
   if type.replace('-text','') == 'daily':
     if type.endsWith('-text'):
-      days = [for day in get_stats('deaths')['death_log']['daily'] int(get_stats('deaths')['death_log']['daily'][day]['total_deaths'].replace(',',''))]
+      for day in get_stats('deaths')['death_log']['daily'] :
+        days.append(int(get_stats('deaths')['death_log']['daily'][day]['total_deaths'].replace(',','')))
       for day in days:
         await ctx.send(day)
     else:
-      days = [for day in get_stats('deaths')['death_log']['daily'] int(get_stats('deaths')['death_log']['daily'][day]['total_deaths'].replace(',',''))]
+      days = []
+      for day in get_stats('deaths')['death_log']['daily'] :
+        days.append(int(get_stats('deaths')['death_log']['daily'][day]['total_deaths'].replace(',','')))
       import matplotlib.pyplot as plt
       print(plt.rcParams.keys())
       plt.rcParams.update({'text.color' : "white",'axes.labelcolor' : "white",'axes.color' : "white"})
