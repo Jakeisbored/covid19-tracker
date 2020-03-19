@@ -83,24 +83,26 @@ async def latest_news(ctx):
           embed=discord.Embed(description="**{}**".format(chunk.replace('\xa0','\n').replace('[source]','')),  color=discord.Colour(value=16730698))
           embed.set_footer(text=cr,icon_url=client.user.avatar_url)
           await ctx.send(embed=embed)
-          """
 @client.command(brief='Get the deaths log starting from the outbreak day',description='Get the deaths log starting from the outbreak day')
-async def death_log(ctx):
-  days = []
-  for day in get_stats('deaths')['death_log']['daily']:
-    days.append(int(get_stats('deaths')['death_log']['daily'][day]['total_deaths'].replace(',','')))
-  import matplotlib.pyplot as plt
-  print(plt.rcParams.keys())
-  plt.rcParams.update({'text.color' : "white",'axes.labelcolor' : "white",'axes.color' : "white"})
-  plt.plot(days,days, color='red')
-  plt.xlabel('Days')
-  plt.ylabel('Daily deaths')
-  plt.title('Daily deaths in the days following the outbreak')
-  plt.savefig('line.png', bbox_inches='tight' , transparent=True)
-  file = discord.File("line.png", filename="line.png")
-  embed=discord.Embed(description="This simple **chart** represents the daily deaths in the last days , You can recieve the data in dms with appending **-dms** to the arg",  color=discord.Colour(value=16730698))
-  embed.set_image(url="attachment://line.png")
-  embed.set_footer(text=cr,icon_url=client.user.avatar_url)
-  await ctx.send(embed=embed,file=file)
-  """
+async def death_log(ctx,type:str):
+  if type.replace('-text','') == 'daily':
+    if type.endsWith('-text'):
+      days = [for day in get_stats('deaths')['death_log']['daily'] int(get_stats('deaths')['death_log']['daily'][day]['total_deaths'].replace(',',''))]
+      for day in days:
+        await ctx.send(day)
+    else:
+      days = [for day in get_stats('deaths')['death_log']['daily'] int(get_stats('deaths')['death_log']['daily'][day]['total_deaths'].replace(',',''))]
+      import matplotlib.pyplot as plt
+      print(plt.rcParams.keys())
+      plt.rcParams.update({'text.color' : "white",'axes.labelcolor' : "white",'axes.color' : "white"})
+      plt.plot(days,days, color='red')
+      plt.xlabel('Days')
+      plt.ylabel('Daily deaths')
+      plt.title('Daily deaths in the days following the outbreak')
+      plt.savefig('line.png', bbox_inches='tight' , transparent=True)
+      file = discord.File("line.png", filename="line.png")
+      embed=discord.Embed(description="This simple **chart** represents the daily deaths in the last days , You can recieve the data in text with appending **-text** to the arg",  color=discord.Colour(value=16730698))
+      embed.set_image(url="attachment://line.png")
+      embed.set_footer(text=cr,icon_url=client.user.avatar_url)
+    await ctx.send(embed=embed,file=file)
 client.run('NTc2MTEzNjg5MzI1NzMxODky.Xm96Aw.TcQZx4WcGY3B_dXf8Fd4GMA3nRo')
