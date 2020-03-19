@@ -1,5 +1,5 @@
 import discord
-from discord.ext import command
+from discord.ext import commands
 from bs4 import BeautifulSoup
 import requests
 main_endpoint = 'https://www.worldometers.info/coronavirus/{}'
