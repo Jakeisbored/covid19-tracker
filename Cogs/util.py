@@ -25,7 +25,7 @@ class Util(commands.Cog):
           else:
               if len(cog) > 1:
                   halp = discord.Embed(title='Error!',description='That is way too many cogs!',color=discord.Colour(value=16730698))
-              halp.set_footer(text=cr,icon_url=self.client.user.avatar_url)
+                  halp.set_footer(text=cr,icon_url=self.client.user.avatar_url)
                   await ctx.send(embed=halp)
               else:
                   found = False
