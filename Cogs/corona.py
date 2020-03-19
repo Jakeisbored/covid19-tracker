@@ -1,9 +1,9 @@
 import discord
-from discord.ext import commands
-
+from discord.ext import command
 from bs4 import BeautifulSoup
 import requests
 main_endpoint = 'https://www.worldometers.info/coronavirus/{}'
+cr = "Powered by discord.py and Jake's brain"
 def get_stats(type):
   if(type == 'deaths'):
     url = main_endpoint.format('coronavirus-death-toll/')
