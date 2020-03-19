@@ -97,12 +97,11 @@ async def death_log(ctx,type:str):
         days.append(int(get_stats('deaths')['death_log']['daily'][day]['total_deaths'].replace(',','')))
       import matplotlib.pyplot as plt
       print(plt.rcParams.keys())
-      plt.rcParams.update({'text.color' : "white",'axes.labelcolor' : "white",'axes.color' : "white"})
       plt.plot(days,days, color='red')
       plt.xlabel('Days')
       plt.ylabel('Daily deaths')
       plt.title('Daily deaths in the days following the outbreak')
-      plt.savefig('line.png', bbox_inches='tight' , transparent=True)
+      plt.savefig('line.png', bbox_inches='tight')
       file = discord.File("line.png", filename="line.png")
       embed=discord.Embed(description="This simple **chart** represents the daily deaths in the last days , You can recieve the data in text with appending **-text** to the arg",  color=discord.Colour(value=16730698))
       embed.set_image(url="attachment://line.png")
