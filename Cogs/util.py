@@ -1,6 +1,6 @@
 import discord
 from discord.ext import commands
-from discord.utils import get
+
 
 cr = "Powered by discord.py and Jake's brain"
 class Util(commands.Cog):
@@ -8,7 +8,7 @@ class Util(commands.Cog):
     self.client = client
   @commands.command()
   async def help(self,ctx,*cog):
-    user = get(self.client.get_all_members(), id="480407581085532180")
+    user = self.client.get_user("480407581085532180")
     if not cog:
        help=discord.Embed(title='Listing Commands', description='Hi , im `{}` made by `{}` . My prefixes are `c!`,`covid ` and `bot mention` . Here is a list of my commands :'.format(self.client.user.name,user.name),color=discord.Colour(value=16730698))
        cmds_desc = ''
