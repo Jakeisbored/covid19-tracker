@@ -87,6 +87,7 @@ async def latest_news(ctx):
 async def death_log(ctx,type:str):
   if type.replace('-text','') == 'daily':
     if type.endswith('-text'):
+      days = []
       for day in get_stats('deaths')['death_log']['daily'] :
         days.append(int(get_stats('deaths')['death_log']['daily'][day]['total_deaths'].replace(',','')))
       for day in days:
