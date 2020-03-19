@@ -90,7 +90,7 @@ async def death_log(ctx,type:str):
       days = []
       msg = 'Daily deaths log :'
       for day in get_stats('deaths')['death_log']['daily'] :
-        msg = '\n **{}** : **__{}__** : **{}** \n'.format(day,get_stats('deaths')['death_log']['daily'][day]['total_deaths'],get_stats('deaths')['death_log']['daily'][day]['total_change_percentage'])
+        msg = msg + '\n **{}** : **__{}__** : **{}** \n'.format(day,get_stats('deaths')['death_log']['daily'][day]['total_deaths'],get_stats('deaths')['death_log']['daily'][day]['total_change_percentage'])
       out = [(msg[i:i+2048]) for i in range(0, len(msg), 2048)]
       for index,chunk in enumerate(out):
         if index == 0:
