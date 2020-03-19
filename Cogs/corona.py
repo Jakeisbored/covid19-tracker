@@ -139,7 +139,7 @@ class CoronaCog(commands.Cog):
   def __init__(self, client):
      self.client = client
   @commands.command(brief='Search for an arg in the infected countries',description='Search for an arg in the infected countries , if no arg is given the list of infected countries is returned')
-  async def search_country(ctx,search_args:str=None):
+  async def search_country(self,ctx,search_args:str=None):
         if (search_args == None):
           countries = get_infected_countries()
           countries.sort()
@@ -163,13 +163,13 @@ class CoronaCog(commands.Cog):
           await ctx.send(embed=embed) 
           return  
   @commands.command(brief='Get symptoms of COVID19',description='Get symptoms of COVID19')
-  async def symptoms(ctx):
+  async def symptoms(self,ctx):
       embed=discord.Embed(title="COVID19 Symptoms")
       embed.set_footer(text=cr,icon_url=client.user.avatar_url)
       embed.set_image(url='https://www.worldometers.info/img/coronavirus--symptoms-table-wang-jama-02072020-reduced.png')
       await ctx.send(embed=embed)
   @commands.command(brief='Get infections in a specific country',description='Get infections in a specific country')
-  async def infections(ctx,country:str=None):
+  async def infections(self,ctx,country:str=None):
       try:
         if(country == None):
           results= get_infections()
@@ -204,7 +204,7 @@ class CoronaCog(commands.Cog):
       except Exception as e:
         await ctx.send(str(e))
   @commands.command(brief='Get latest info about COVID19 (Updates every 24 hours)',description='Get latest info about COVID19 (Updates every 24 hours)')
-  async def latest_news(ctx):
+  async def latest_news(self,ctx):
         out = [(get_latest_info()['info'][i:i+2048]) for i in range(0, len(get_latest_info()['info']), 2048)]
         for index,chunk in enumerate(out):
           if index == 0:
@@ -216,7 +216,7 @@ class CoronaCog(commands.Cog):
             embed.set_footer(text=cr,icon_url=client.user.avatar_url)
             await ctx.send(embed=embed)
   @commands.command(brief='Get the deaths log starting from the outbreak day',description='Get the deaths log starting from the outbreak day')
-  async def death_log(ctx,type:str):
+  async def death_log(self,ctx,type:str):
     if type.replace('-text','') == 'daily':
       if type.endswith('-text'):
         days = []
@@ -248,7 +248,7 @@ class CoronaCog(commands.Cog):
         embed.set_image(url="attachment://line.png")
         embed.set_footer(text=cr,icon_url=client.user.avatar_url)
         await ctx.send(embed=embed,file=file)
-    if type.replace('-text','') == 'total':
+    elif type.replace('-text','') == 'total':
       if type.endswith('-text'):
         days = []
         msg = 'Total deaths log :'
