@@ -20,12 +20,12 @@ class Util(commands.Cog):
                       cmds_desc += ('{} - {}'.format(y.name,y.help)+'\n')
               halp.add_field(name='Uncatergorized Commands',value=cmds_desc[0:len(cmds_desc)-1],inline=False)
               halp.set_footer(text=cr,icon_url=self.client.user.avatar_url)
-              await ctx.send(embed=halp)
+              await ctx.send('',embed=halp)
           else:
               if len(cog) > 1:
                   halp = discord.Embed(title='Error!',description='That is way too many cogs!',color=discord.Colour(value=16730698))
                   halp.set_footer(text=cr,icon_url=self.client.user.avatar_url)
-                  await ctx.send(embed=halp)
+                  await ctx.send('',embed=halp)
               else:
                   found = False
                   for x in self.client.cogs:
@@ -42,7 +42,7 @@ class Util(commands.Cog):
                       halp = discord.Embed(title='Error!',description='How do you even use "'+cog[0]+'"?',color=discord.Colour(value=16730698))
                       halp.set_footer(text=cr,icon_url=self.client.user.avatar_url)
                   else:
-                      await ctx.send(embed=halp)
+                      await ctx.send('',embed=halp)
       except Exception as e:
           raise e
 def setup(client):
