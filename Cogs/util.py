@@ -9,16 +9,11 @@ class Util(commands.Cog):
       """Gets all cogs and commands of mine."""
       try:
           if not cog:
-              halp=discord.Embed(title='Cog Listing and Uncatergorized Commands', description='Use `c!help *cog*` to find out more about them!\n(BTW, the Cog Name Must Be in Title Case, Just Like this Sentence.)',color=discord.Colour(value=16730698))
-              cogs_desc = ''
-              for x in self.client.cogs:
-                  cogs_desc += ('{} - {}'.format(x,self.client.cogs[x].__doc__)+'\n')
-              halp.add_field(name='Cogs',value=cogs_desc[0:len(cogs_desc)-1],inline=False)
+              halp=discord.Embed(title='Listing Commands', description='Use `c!help *cog*` to find out more about them!\n(BTW, the Cog Name Must Be in Title Case, Just Like this Sentence.)',color=discord.Colour(value=16730698))
               cmds_desc = ''
               for y in self.client.walk_commands():
-                  if not y.cog_name and not y.hidden:
-                      cmds_desc += ('{} - {}'.format(y.name,y.help)+'\n')
-              halp.add_field(name='Uncatergorized Commands',value=cmds_desc[0:len(cmds_desc)-1],inline=False)
+                 cmds_desc += '\n {} - {}'.format(y.name,y.description)
+              halp.add_field(name='Commands',value=cmds_desc if len(cmds_desc) >1 else 'مافي كومندات او انتا غلطان يا مغفل',inline=False)
               halp.set_footer(text=cr,icon_url=self.client.user.avatar_url)
               await ctx.send('',embed=halp)
           else:
