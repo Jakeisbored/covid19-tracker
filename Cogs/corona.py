@@ -2,18 +2,11 @@ import discord
 from discord.ext import commands
 
 
-class MembersCog(commands.Cog):
-  def __init__(self, bot):
-     self.bot = bot
+class CoronaCog(commands.Cog):
+  def __init__(self, client):
+     self.client = client
   from covid import get_infections , get_infections_by_name , get_infected_countries , check_length , get_latest_info , get_stats
-  import discord
-  from discord.ext import commands
-  client = commands.Bot(command_prefix='c!', description='A COVID19 tracking bot' , activity=discord.Activity(type=discord.ActivityType.watching, name="corona updates"))
-  cr = "Powered by discord.py and Jake's brain"
-  @client.event
-  async def on_ready():
-    print(f'Logged as {client.user.name}')
-  @client.command(brief='Search for an arg in the infected countries',description='Search for an arg in the infected countries , if no arg is given the list of infected countries is returned')
+  @commands.command(brief='Search for an arg in the infected countries',description='Search for an arg in the infected countries , if no arg is given the list of infected countries is returned')
   async def search_country(ctx,search_args:str=None):
         if (search_args == None):
           countries = get_infected_countries()
@@ -37,14 +30,14 @@ class MembersCog(commands.Cog):
 
           await ctx.send(embed=embed) 
           return  
-  @client.command(brief='Get symptoms of COVID19',description='Get symptoms of COVID19')
+  @commands.command(brief='Get symptoms of COVID19',description='Get symptoms of COVID19')
   async def symptoms(ctx):
       embed=discord.Embed(title="COVID19 Symptoms")
       embed.set_footer(text=cr,icon_url=client.user.avatar_url)
       embed.set_image(url='https://www.worldometers.info/img/coronavirus--symptoms-table-wang-jama-02072020-reduced.png')
       await ctx.send(embed=embed)
-  @client.command(brief='Get infections in a specific country',description='Get infections in a specific country')
-  async def covid(ctx,country:str=None):
+  @commands.command(brief='Get infections in a specific country',description='Get infections in a specific country')
+  async def infections(ctx,country:str=None):
       try:
         if(country == None):
           results= get_infections()
@@ -78,7 +71,7 @@ class MembersCog(commands.Cog):
         return
       except Exception as e:
         await ctx.send(str(e))
-  @client.command(brief='Get latest info about COVID19 (Updates every 24 hours)',description='Get latest info about COVID19 (Updates every 24 hours)')
+  @commands.command(brief='Get latest info about COVID19 (Updates every 24 hours)',description='Get latest info about COVID19 (Updates every 24 hours)')
   async def latest_news(ctx):
         out = [(get_latest_info()['info'][i:i+2048]) for i in range(0, len(get_latest_info()['info']), 2048)]
         for index,chunk in enumerate(out):
@@ -90,7 +83,7 @@ class MembersCog(commands.Cog):
             embed=discord.Embed(description="**{}**".format(chunk.replace('\xa0','\n').replace('[source]','')),  color=discord.Colour(value=16730698))
             embed.set_footer(text=cr,icon_url=client.user.avatar_url)
             await ctx.send(embed=embed)
-  @client.command(brief='Get the deaths log starting from the outbreak day',description='Get the deaths log starting from the outbreak day')
+  @commands.command(brief='Get the deaths log starting from the outbreak day',description='Get the deaths log starting from the outbreak day')
   async def death_log(ctx,type:str):
     if type.replace('-text','') == 'daily':
       if type.endswith('-text'):
@@ -155,4 +148,4 @@ class MembersCog(commands.Cog):
         embed.set_footer(text=cr,icon_url=client.user.avatar_url)
         await ctx.send(embed=embed,file=file)
    def setup(client):
-    client.add_cog(MembersCog(client))
+    client.add_cog(CoronaCog(client))
