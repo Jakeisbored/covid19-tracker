@@ -44,6 +44,6 @@ class Util(commands.Cog):
                   else:
                       await ctx.send(embed=halp)
       except Exception as e:
-          await ctx.send(str(e))
+          raise e
 def setup(client):
   client.add_cog(Util(client))
