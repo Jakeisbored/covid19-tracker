@@ -43,7 +43,7 @@ class Util(commands.Cog):
                       halp = discord.Embed(title='Error!',description='How do you even use "'+cog[0]+'"?',color=discord.Colour(value=16730698))
                       halp.set_footer(text=cr,icon_url=self.client.user.avatar_url)
                   else:
-                  await ctx.send(embed=halp)
+                      await ctx.send(embed=halp)
       except Exception as e:
           await ctx.send(str(e))
 def setup(client):
