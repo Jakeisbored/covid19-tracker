@@ -6,7 +6,7 @@ import sys, traceback
 def get_prefix(client, message):
     prefixes = ['covid ', 'c!']
     return commands.when_mentioned_or(*prefixes)(client, message)
-initial_extensions = ['Cogs.corona']
+initial_extensions = ['Cogs.corona.py']
 
 client = commands.Bot(command_prefix=get_prefix, description='A covid 19 tracking bot')
 
