@@ -9,8 +9,7 @@ class Util(commands.Cog):
       """Gets all cogs and commands of mine."""
       try:
           if not cog:
-              halp=discord.Embed(color=discord.Colour(value=16730698),title='Cog Listing and Uncatergorized Commands',
-                                 description='Use `!help *cog*` to find out more about them!\n(BTW, the Cog Name Must Be in Title Case, Just Like this Sentence.)')
+              halp=discord.Embed(title='Cog Listing and Uncatergorized Commands', description='Use `c!help *cog*` to find out more about them!\n(BTW, the Cog Name Must Be in Title Case, Just Like this Sentence.)',color=discord.Colour(value=16730698))
               cogs_desc = ''
               for x in self.client.cogs:
                   cogs_desc += ('{} - {}'.format(x,self.client.cogs[x].__doc__)+'\n')
