@@ -91,10 +91,10 @@ async def death_log(ctx,type:str):
       msg = 'Daily deaths log :'
       for day in get_stats('deaths')['death_log']['daily'] :
         msg = msg + '\n **{}** : **__{}__** : **{}** \n'.format(day,get_stats('deaths')['death_log']['daily'][day]['total_deaths'],get_stats('deaths')['death_log']['daily'][day]['total_change_percentage'])
-      out = [(msg[i:i+2048]) for i in range(0, len(msg), 2048)]
+      out = [(msg[i:i+2048]) for i in range(0, len(msg), 2040)]
       for index,chunk in enumerate(out):
         if index == 0:
-          embed=discord.Embed(title="Daily death log",description="**{}**".format(chunk.replace('\xa0','\n').replace('[source]','')),  color=discord.Colour(value=16730698))
+          embed=discord.Embed(title="Daily death log",description="**{}**".format(chunk),  color=discord.Colour(value=16730698))
           embed.set_footer(text=cr,icon_url=client.user.avatar_url)
           await ctx.send(embed=embed)
         else :
