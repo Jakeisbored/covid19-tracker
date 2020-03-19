@@ -12,11 +12,11 @@ class Util(commands.Cog):
               halp=discord.Embed(color=discord.Colour(value=16730698),title='Cog Listing and Uncatergorized Commands',
                                  description='Use `!help *cog*` to find out more about them!\n(BTW, the Cog Name Must Be in Title Case, Just Like this Sentence.)')
               cogs_desc = ''
-              for x in self.bot.cogs:
-                  cogs_desc += ('{} - {}'.format(x,self.bot.cogs[x].__doc__)+'\n')
+              for x in self.client.cogs:
+                  cogs_desc += ('{} - {}'.format(x,self.client.cogs[x].__doc__)+'\n')
               halp.add_field(name='Cogs',value=cogs_desc[0:len(cogs_desc)-1],inline=False)
               cmds_desc = ''
-              for y in self.bot.walk_commands():
+              for y in self.client.walk_commands():
                   if not y.cog_name and not y.hidden:
                       cmds_desc += ('{} - {}'.format(y.name,y.help)+'\n')
               halp.add_field(name='Uncatergorized Commands',value=cmds_desc[0:len(cmds_desc)-1],inline=False)
@@ -29,12 +29,12 @@ class Util(commands.Cog):
                   await ctx.send(embed=halp)
               else:
                   found = False
-                  for x in self.bot.cogs:
+                  for x in self.client.cogs:
                       for y in cog:
                           if x == y:
                               halp=discord.Embed(title=cog[0]+' Command Listing',description=self.bot.cogs[cog[0]].__doc__,color=discord.Colour(value=16730698))
                               halp.set_footer(text=cr,icon_url=self.client.user.avatar_url)
-                              for c in self.bot.get_cog(y).get_commands():
+                              for c in self.client.get_cog(y).get_commands():
                                   if not c.hidden:
                                       halp.add_field(name=c.name,value=c.help,inline=False)
                                       halp.set_footer(text=cr,icon_url=self.client.user.avatar_url)
