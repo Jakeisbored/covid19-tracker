@@ -94,11 +94,11 @@ async def death_log(ctx,type:str):
       out = [(msg[i:i+2040]) for i in range(0, len(msg), 2040)]
       for index,chunk in enumerate(out):
         if index == 0:
-          embed=discord.Embed(title="Daily death log",description="**{}**".format(chunk),  color=discord.Colour(value=16730698))
+          embed=discord.Embed(,description="{}".format(chunk),  color=discord.Colour(value=16730698))
           embed.set_footer(text=cr,icon_url=client.user.avatar_url)
           await ctx.send(embed=embed)
         else :
-          embed=discord.Embed(description="**{}**".format(chunk),  color=discord.Colour(value=16730698))
+          embed=discord.Embed(description="{}".format(chunk),  color=discord.Colour(value=16730698))
           embed.set_footer(text=cr,icon_url=client.user.avatar_url)
           await ctx.send(embed=embed)
     else:
@@ -125,11 +125,11 @@ async def death_log(ctx,type:str):
       out = [(msg[i:i+2040]) for i in range(0, len(msg), 2040)]
       for index,chunk in enumerate(out):
         if index == 0:
-          embed=discord.Embed(title="Total death log",description="**{}**".format(chunk),  color=discord.Colour(value=16730698))
+          embed=discord.Embed(description="{}".format(chunk),  color=discord.Colour(value=16730698))
           embed.set_footer(text=cr,icon_url=client.user.avatar_url)
           await ctx.send(embed=embed)
         else :
-          embed=discord.Embed(description="**{}**".format(chunk),  color=discord.Colour(value=16730698))
+          embed=discord.Embed(description="{}".format(chunk),  color=discord.Colour(value=16730698))
           embed.set_footer(text=cr,icon_url=client.user.avatar_url)
           await ctx.send(embed=embed)
     else:
