@@ -147,5 +147,5 @@ class CoronaCog(commands.Cog):
         embed.set_image(url="attachment://line.png")
         embed.set_footer(text=cr,icon_url=client.user.avatar_url)
         await ctx.send(embed=embed,file=file)
-   def setup(client):
+  def setup(client):
     client.add_cog(CoronaCog(client))
