@@ -116,4 +116,35 @@ async def death_log(ctx,type:str):
       embed.set_image(url="attachment://line.png")
       embed.set_footer(text=cr,icon_url=client.user.avatar_url)
       await ctx.send(embed=embed,file=file)
+  if type.replace('-text','') == 'total':
+    if type.endswith('-text'):
+      days = []
+      msg = 'Total deaths log :'
+      for day in get_stats('deaths')['death_log']['total'] :
+        msg = msg + '\n **{}** : **__{}__** : **{}** \n'.format(day,get_stats('deaths')['death_log']['total'][day]['total_deaths'],get_stats('deaths')['death_log']['total'][day]['total_change_percentage'])
+      out = [(msg[i:i+2040]) for i in range(0, len(msg), 2040)]
+      for index,chunk in enumerate(out):
+        if index == 0:
+          embed=discord.Embed(title="Total death log",description="**{}**".format(chunk),  color=discord.Colour(value=16730698))
+          embed.set_footer(text=cr,icon_url=client.user.avatar_url)
+          await ctx.send(embed=embed)
+        else :
+          embed=discord.Embed(description="**{}**".format(chunk),  color=discord.Colour(value=16730698))
+          embed.set_footer(text=cr,icon_url=client.user.avatar_url)
+          await ctx.send(embed=embed)
+    else:
+      change = []
+      for day in get_stats('deaths')['death_log']['total'] :
+        change.append(int(get_stats('deaths')['death_log']['total'][day]['total_change'].replace(',','')))
+      import matplotlib.pyplot as plt
+      plt.plot(change,change, color='red')
+      plt.xlabel('Days')
+      plt.ylabel('Total deaths')
+      plt.title('Total deaths in the days following the outbreak')
+      plt.savefig('line.png', bbox_inches='tight')
+      file = discord.File("line.png", filename="line.png")
+      embed=discord.Embed(description="This simple **chart** represents the total deaths in the last days , You can recieve the data in text with appending **-text** to the arg",  color=discord.Colour(value=16730698))
+      embed.set_image(url="attachment://line.png")
+      embed.set_footer(text=cr,icon_url=client.user.avatar_url)
+      await ctx.send(embed=embed,file=file)
 client.run('NTc2MTEzNjg5MzI1NzMxODky.Xm96Aw.TcQZx4WcGY3B_dXf8Fd4GMA3nRo')
