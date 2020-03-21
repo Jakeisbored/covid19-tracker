@@ -14,7 +14,7 @@ class Util(commands.Cog):
        cmds_desc = ''
        for y in self.client.walk_commands():
           print(y.cog)
-          cmds_desc += '\n `{}` : ***{}*** : *{}*'.format(y.name,y.brief if y.brief else 'No brief description found',y.cog.name)
+          cmds_desc += '\n `{}` : ***{}*** : *{}*'.format(y.name,y.brief if y.brief else 'No brief description found',y.cog_name)
        help.add_field(name='Introduction:',value='Hi , im `{}` made by `{}` . My prefixes are `c!`,`covid ` and `bot mention` . View the commands in the next segment.'.format(self.client.user.name,'Jake'))
        help.add_field(name='Commands:',value=cmds_desc)
        help.set_footer(text='add a command name after the help to view more about a certain command',icon_url=self.client.user.avatar_url)
