@@ -218,76 +218,81 @@ class Corona(commands.Cog):
               embed.set_footer(text=cr,icon_url=self.client.user.avatar_url)
               await ctx.send(embed=embed)
   @commands.command(usage='death_log <daily/total>[-text]',brief='Get the deaths log starting from the outbreak day',description='Get the deaths log starting from the outbreak day')
-  async def death_log(self,ctx,type:str=None):
-    if type.replace('-text','') == 'daily':
-      if type.endswith('-text'):
-        async with ctx.typing():
-          days = []
-          msg = 'Daily deaths log :'
-          for day in get_stats('deaths')['death_log']['daily'] :
-            msg = msg + '\n **{}** : **__{}__** : **{}** \n'.format(day,get_stats('deaths')['death_log']['daily'][day]['total_deaths'],get_stats('deaths')['death_log']['daily'][day]['total_change_percentage'])
-          out = [(msg[i:i+2040]) for i in range(0, len(msg), 2040)]
-          for index,chunk in enumerate(out):
-            if index == 0:
-              embed=discord.Embed(description="{}".format(chunk),  color=discord.Colour(value=16730698))
-              embed.set_footer(text=cr,icon_url=self.client.user.avatar_url)
-              await ctx.send(embed=embed)
-            else :
-              embed=discord.Embed(description="{}".format(chunk),  color=discord.Colour(value=16730698))
-              embed.set_footer(text=cr,icon_url=self.client.user.avatar_url)
-              await ctx.send(embed=embed)
+  async def death_log(self,ctx,type:str):
+    try:
+      if type.replace('-text','') == 'daily':
+        if type.endswith('-text'):
+          async with ctx.typing():
+            days = []
+            msg = 'Daily deaths log :'
+            for day in get_stats('deaths')['death_log']['daily'] :
+              msg = msg + '\n **{}** : **__{}__** : **{}** \n'.format(day,get_stats('deaths')['death_log']['daily'][day]['total_deaths'],get_stats('deaths')['death_log']['daily'][day]['total_change_percentage'])
+            out = [(msg[i:i+2040]) for i in range(0, len(msg), 2040)]
+            for index,chunk in enumerate(out):
+              if index == 0:
+                embed=discord.Embed(description="{}".format(chunk),  color=discord.Colour(value=16730698))
+                embed.set_footer(text=cr,icon_url=self.client.user.avatar_url)
+                await ctx.send(embed=embed)
+              else :
+                embed=discord.Embed(description="{}".format(chunk),  color=discord.Colour(value=16730698))
+                embed.set_footer(text=cr,icon_url=self.client.user.avatar_url)
+                await ctx.send(embed=embed)
+        else:
+          async with ctx.typing():
+            change = []
+            for day in get_stats('deaths')['death_log']['daily'] :
+              change.append(int(get_stats('deaths')['death_log']['daily'][day]['total_change'].replace(',','')))
+            import matplotlib.pyplot as plt
+            plt.plot(change,change, color='red')
+            plt.xlabel('Days')
+            plt.ylabel('Daily deaths')
+            plt.title('Daily deaths in the days following the outbreak')
+            plt.savefig('line.png', bbox_inches='tight')
+            file = discord.File("line.png", filename="line.png")
+            embed=discord.Embed(description="This simple **chart** represents the daily deaths in the last days , You can recieve the data in text with appending **-text** to the arg",  color=discord.Colour(value=16730698))
+            embed.set_image(url="attachment://line.png")
+            embed.set_footer(text=cr,icon_url=self.client.user.avatar_url)
+            await ctx.send(embed=embed,file=file)
+      elif type.replace('-text','') == 'total':
+        if type.endswith('-text'):
+          async with ctx.typing():
+            days = []
+            msg = 'Total deaths log :'
+            for day in get_stats('deaths')['death_log']['total'] :
+              msg = msg + '\n **{}** : **__{}__** : **{}** \n'.format(day,get_stats('deaths')['death_log']['total'][day]['total_deaths'],get_stats('deaths')['death_log']['total'][day]['total_change_percentage'])
+            out = [(msg[i:i+2040]) for i in range(0, len(msg), 2040)]
+            for index,chunk in enumerate(out):
+              if index == 0:
+                embed=discord.Embed(description="{}".format(chunk),  color=discord.Colour(value=16730698))
+                embed.set_footer(text=cr,icon_url=self.client.user.avatar_url)
+                await ctx.send(embed=embed)
+              else :
+                embed=discord.Embed(description="{}".format(chunk),  color=discord.Colour(value=16730698))
+                embed.set_footer(text=cr,icon_url=self.client.user.avatar_url)
+                await ctx.send(embed=embed)
+        else:
+          async with ctx.typing():
+            change = []
+            for day in get_stats('deaths')['death_log']['total'] :
+              change.append(int(get_stats('deaths')['death_log']['total'][day]['total_change'].replace(',','')))
+            import matplotlib.pyplot as plt
+            plt.plot(change,change, color='red')
+            plt.xlabel('Days')
+            plt.ylabel('Total deaths')
+            plt.title('Total deaths in the days following the outbreak')
+            plt.savefig('line.png', bbox_inches='tight')
+            file = discord.File("line.png", filename="line.png")
+            embed=discord.Embed(description="This simple **chart** represents the total deaths in the last days , You can recieve the data in text with appending **-text** to the arg",  color=discord.Colour(value=16730698))
+            embed.set_image(url="attachment://line.png")
+            embed.set_footer(text=cr,icon_url=self.client.user.avatar_url)
+            await ctx.send(embed=embed,file=file)
       else:
-        async with ctx.typing():
-          change = []
-          for day in get_stats('deaths')['death_log']['daily'] :
-            change.append(int(get_stats('deaths')['death_log']['daily'][day]['total_change'].replace(',','')))
-          import matplotlib.pyplot as plt
-          plt.plot(change,change, color='red')
-          plt.xlabel('Days')
-          plt.ylabel('Daily deaths')
-          plt.title('Daily deaths in the days following the outbreak')
-          plt.savefig('line.png', bbox_inches='tight')
-          file = discord.File("line.png", filename="line.png")
-          embed=discord.Embed(description="This simple **chart** represents the daily deaths in the last days , You can recieve the data in text with appending **-text** to the arg",  color=discord.Colour(value=16730698))
-          embed.set_image(url="attachment://line.png")
-          embed.set_footer(text=cr,icon_url=self.client.user.avatar_url)
-          await ctx.send(embed=embed,file=file)
-    elif type.replace('-text','') == 'total':
-      if type.endswith('-text'):
-        async with ctx.typing():
-          days = []
-          msg = 'Total deaths log :'
-          for day in get_stats('deaths')['death_log']['total'] :
-            msg = msg + '\n **{}** : **__{}__** : **{}** \n'.format(day,get_stats('deaths')['death_log']['total'][day]['total_deaths'],get_stats('deaths')['death_log']['total'][day]['total_change_percentage'])
-          out = [(msg[i:i+2040]) for i in range(0, len(msg), 2040)]
-          for index,chunk in enumerate(out):
-            if index == 0:
-              embed=discord.Embed(description="{}".format(chunk),  color=discord.Colour(value=16730698))
-              embed.set_footer(text=cr,icon_url=self.client.user.avatar_url)
-              await ctx.send(embed=embed)
-            else :
-              embed=discord.Embed(description="{}".format(chunk),  color=discord.Colour(value=16730698))
-              embed.set_footer(text=cr,icon_url=self.client.user.avatar_url)
-              await ctx.send(embed=embed)
-      else:
-        async with ctx.typing():
-          change = []
-          for day in get_stats('deaths')['death_log']['total'] :
-            change.append(int(get_stats('deaths')['death_log']['total'][day]['total_change'].replace(',','')))
-          import matplotlib.pyplot as plt
-          plt.plot(change,change, color='red')
-          plt.xlabel('Days')
-          plt.ylabel('Total deaths')
-          plt.title('Total deaths in the days following the outbreak')
-          plt.savefig('line.png', bbox_inches='tight')
-          file = discord.File("line.png", filename="line.png")
-          embed=discord.Embed(description="This simple **chart** represents the total deaths in the last days , You can recieve the data in text with appending **-text** to the arg",  color=discord.Colour(value=16730698))
-          embed.set_image(url="attachment://line.png")
-          embed.set_footer(text=cr,icon_url=self.client.user.avatar_url)
-          await ctx.send(embed=embed,file=file)
-    else:
-      embed=discord.Embed(title='Error : Invalid usage',description='**{}**'.format(self.usage),color=discord.Colour(value=16730698))
-      embed.set_footer(text=cr,icon_url=self.client.user.avatar_url)
-      await ctx.send(embed=embed)
+        embed=discord.Embed(title='Error : Invalid usage',description='**{}**'.format(self.usage),color=discord.Colour(value=16730698))
+        embed.set_footer(text=cr,icon_url=self.client.user.avatar_url)
+        await ctx.send(embed=embed)
+    except discord.ext.commands.errors.MissingRequiredArgument:
+        embed=discord.Embed(title='Error : Invalid usage',description='**{}**'.format(self.usage),color=discord.Colour(value=16730698))
+        embed.set_footer(text=cr,icon_url=self.client.user.avatar_url)
+        await ctx.send(embed=embed)
 def setup(client):
   client.add_cog(Corona(client))
