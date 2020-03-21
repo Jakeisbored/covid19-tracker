@@ -172,6 +172,7 @@ class CoronaCog(commands.Cog):
       try:
         if(country == None):
           results= get_infections()
+          await ctx.typing()
           import matplotlib.pyplot as plt
           plt.rcParams.update({'text.color' : "white",'axes.labelcolor' : "white"})
           labels = 'Deaths', 'Cured' , 'Mid condition'
