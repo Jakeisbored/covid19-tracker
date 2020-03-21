@@ -13,9 +13,9 @@ class Util(commands.Cog):
        help=discord.Embed(title='Help menu',color=discord.Colour(value=16730698))
        cmds_desc = ''
        for y in self.client.walk_commands():
-          cmds_desc += '\n `{}` : ***{}*** : *{}*'.format(y.name,y.brief if y.brief else 'No brief description found',y.cog)
-       help.add_field(name='Introduction:',value='Hi , im `{}` made by `{}` . My prefixes are `c!`,`covid ` and `bot mention` .'.format(self.client.user.name,'Jake'))
-       help.add_field(name='Commands and their brief descriptions:',value=cmds_desc)
+          cmds_desc += '\n `{}` : ***{}*** : *{}*'.format(y.name,y.brief if y.brief else 'No brief description found',y.cog.name)
+       help.add_field(name='Introduction:',value='Hi , im `{}` made by `{}` . My prefixes are `c!`,`covid ` and `bot mention` . View the commands in the next segment.'.format(self.client.user.name,'Jake'))
+       help.add_field(name='Commands:',value=cmds_desc)
        help.set_footer(text='add a command name after the help to view more about a certain command',icon_url=self.client.user.avatar_url)
        await ctx.send(embed=help)
 
