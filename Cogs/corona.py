@@ -143,7 +143,7 @@ class CoronaCog(commands.Cog):
         if (search_args == None):
           countries = get_infected_countries()
           countries.sort()
-          embed = discord.Embed(title="Currently infected countries !" , description="**{}** \n **{}** total countries".format(countries.join(',')[:2000],  color=discord.Colour(value=16730698))
+          embed = discord.Embed(title="Currently infected countries !" , description="**{} ...** \n **{}** total countries".format(countries.join(',')[:2000],len(countries)),  color=discord.Colour(value=16730698))
           embed.set_footer(text=cr,icon_url=self.client.user.avatar_url)      
           embed.set_thumbnail(url='https://cdn.discordapp.com/attachments/686666564589846625/688494381027688480/caution-icon-png-14-original.png')
           await ctx.send(embed=embed)
