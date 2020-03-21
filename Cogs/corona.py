@@ -218,7 +218,7 @@ class Corona(commands.Cog):
               embed.set_footer(text=cr,icon_url=self.client.user.avatar_url)
               await ctx.send(embed=embed)
   @commands.command(usage='death_log <daily/total>[-text]',brief='Get the deaths log starting from the outbreak day',description='Get the deaths log starting from the outbreak day')
-  async def death_log(self,ctx,type:str):
+  async def death_log(self,ctx,type:str=None):
     if type.replace('-text','') == 'daily':
       if type.endswith('-text'):
         async with ctx.typing():
@@ -288,6 +288,6 @@ class Corona(commands.Cog):
     else:
       embed=discord.Embed(title='Error : Invalid usage',description='**{}**'.format(self.usage),color=discord.Colour(value=16730698))
       embed.set_footer(text=cr,icon_url=self.client.user.avatar_url)
-      await ct
+      await ctx.send(embed=embed)
 def setup(client):
   client.add_cog(Corona(client))
