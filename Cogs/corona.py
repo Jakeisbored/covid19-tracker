@@ -217,7 +217,7 @@ class Corona(commands.Cog):
               embed=discord.Embed(description="**{}**".format(chunk.replace('\xa0','\n').replace('[source]','')),  color=discord.Colour(value=16730698))
               embed.set_footer(text=cr,icon_url=self.client.user.avatar_url)
               await ctx.send(embed=embed)
-  @commands.command(brief='Get the deaths log starting from the outbreak day',description='Get the deaths log starting from the outbreak day')
+  @commands.command(usage='death_log <daily/total>[-text]',brief='Get the deaths log starting from the outbreak day',description='Get the deaths log starting from the outbreak day')
   async def death_log(self,ctx,type:str):
     if type.replace('-text','') == 'daily':
       if type.endswith('-text'):
@@ -285,5 +285,9 @@ class Corona(commands.Cog):
           embed.set_image(url="attachment://line.png")
           embed.set_footer(text=cr,icon_url=self.client.user.avatar_url)
           await ctx.send(embed=embed,file=file)
+    else:
+      embed=discord.Embed(title='Error : Invalid usage',description='**{}**'.format(self.usage),color=discord.Colour(value=16730698))
+      embed.set_footer(text=cr,icon_url=self.client.user.avatar_url)
+      await ct
 def setup(client):
   client.add_cog(Corona(client))
