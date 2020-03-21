@@ -140,7 +140,7 @@ class CoronaCog(commands.Cog):
      self.client = client
   @commands.command(brief='Search for an arg in the infected countries',description='Search for an arg in the infected countries , if no arg is given the list of infected countries is returned')
   async def search_country(self,ctx,search_args:str=None):
-        sep = '-'
+        sep = ' , '
         if (search_args == None):
           countries = get_infected_countries()
           countries.sort()
@@ -172,7 +172,7 @@ class CoronaCog(commands.Cog):
       try:
         if(country == None):
           results= get_infections()
-          await ctx.typing()
+          async ctx.typing()
           import matplotlib.pyplot as plt
           plt.rcParams.update({'text.color' : "white",'axes.labelcolor' : "white"})
           labels = 'Deaths', 'Cured' , 'Mid condition'
