@@ -286,9 +286,10 @@ class Corona(commands.Cog):
             embed.set_footer(text=cr,icon_url=self.client.user.avatar_url)
             await ctx.send(embed=embed,file=file)
       else:
-        embed=discord.Embed(title='Error : Invalid usage',description='**{}**'.format(self.usage),color=discord.Colour(value=16730698))
-        embed.set_footer(text=cr,icon_url=self.client.user.avatar_url)
-        await ctx.send(embed=embed)
-
+        for y in self.client.walk_commands():
+          if y.name == 'death_log':
+            embed=discord.Embed(title='Error : Invalid usage',description='**{}**'.format(y.usage),color=discord.Colour(value=16730698))
+            embed.set_footer(text=cr,icon_url=self.client.user.avatar_url)
+            await ctx.send(embed=embed)
 def setup(client):
   client.add_cog(Corona(client))
