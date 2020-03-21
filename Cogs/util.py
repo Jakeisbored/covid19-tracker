@@ -20,7 +20,7 @@ class Util(commands.Cog):
        await ctx.send(embed=help)
     else:
        for y in self.client.walk_commands():
-          if y == cmd:
+          if y.name == cmd:
              help=discord.Embed(title='Showing info about : {}'.format(cmd),description='Full Description : **{}**\n Brief Description : **{}** \n Usage : **{}**'.format(y.description if y.description else 'No full description was found',y.brief if y.brief else 'No brief description was found',y.usage if y.usage else 'No proper usage was found'),color=discord.Colour(value=16730698))
              help.set_footer(text=cr,icon_url=self.client.user.avatar_url)
              await ctx.send(embed=help)
