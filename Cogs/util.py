@@ -7,9 +7,9 @@ class Util(commands.Cog):
   def __init__(self,client):
     self.client = client
   @commands.command()
-  async def help(self,ctx,):
+  async def help(self,ctx,cmd:str):
     user = self.client.get_user("480407581085532180")
-    if not cog:
+    if not cmd:
        help=discord.Embed(title='Help menu',color=discord.Colour(value=16730698))
        cmds_desc = ''
        for y in self.client.walk_commands():
