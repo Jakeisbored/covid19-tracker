@@ -140,10 +140,11 @@ class CoronaCog(commands.Cog):
      self.client = client
   @commands.command(brief='Search for an arg in the infected countries',description='Search for an arg in the infected countries , if no arg is given the list of infected countries is returned')
   async def search_country(self,ctx,search_args:str=None):
+        sep = '-'
         if (search_args == None):
           countries = get_infected_countries()
           countries.sort()
-          embed = discord.Embed(title="Currently infected countries !" , description="**{} ...** \n **{}** total countries".format(countries.join(',')[:2000],len(countries)),  color=discord.Colour(value=16730698))
+          embed = discord.Embed(title="Currently infected countries !" , description="**{} ...** \n **{}** total countries".format(sep.join(countries)[:2000],str(len(countries))),  color=discord.Colour(value=16730698))
           embed.set_footer(text=cr,icon_url=self.client.user.avatar_url)      
           embed.set_thumbnail(url='https://cdn.discordapp.com/attachments/686666564589846625/688494381027688480/caution-icon-png-14-original.png')
           await ctx.send(embed=embed)
@@ -157,8 +158,7 @@ class CoronaCog(commands.Cog):
           for country in countries:
             if(search_args.lower() in country.lower()): 
               c.append(country)
-          embed.description = '**{}** \n **{}** total results'.format('No results were found' if len(str(c).replace('[','').replace(']',''))<1 else str(c).replace('[','').replace(']',''),str(len(c)))
-
+          embed.description = '**{}** \n **{}** total results'.format('No results were found' if len(c)<1 else sep.join(c)[:2000],str(len(c)))
           await ctx.send(embed=embed) 
           return  
   @commands.command(brief='Get symptoms of COVID19',description='Get symptoms of COVID19')
