@@ -135,7 +135,7 @@ def check_length(query , extra=None , special=False):
         return query + ' ({} % addition rate)'.format(extra)
       else:
         return query + ' ({} % )'.format(extra)
-class CoronaCog(commands.Cog):
+class Corona(commands.Cog):
   def __init__(self, client):
      self.client = client
   @commands.command(brief='Search for an arg in the infected countries',description='Search for an arg in the infected countries , if no arg is given the list of infected countries is returned')
@@ -172,23 +172,23 @@ class CoronaCog(commands.Cog):
       try:
         if(country == None):
           results= get_infections()
-          ctx.typing()
-          import matplotlib.pyplot as plt
-          plt.rcParams.update({'text.color' : "white",'axes.labelcolor' : "white"})
-          labels = 'Deaths', 'Cured' , 'Mid condition'
-          sizes = [int(results['worldwide_cases']['total_cases']['deaths'].replace(',','')),int(results['worldwide_cases']['total_cases']['cured'].replace(',','')),int(results['worldwide_cases']['total_cases']['active_cases']['mid_condition'].replace(',',''))]
-          colors = ['#ff5151', '#76ff46' , 'orange']
-          explode = (0, 0 , 0) 
-          plt.pie(sizes, explode=explode, labels=labels, colors=colors, autopct='%1.0f%%')
-          plt.axis('equal')
-          plt.savefig('pie.png', bbox_inches='tight' , transparent=True)
-          embed=discord.Embed(title="Infections worldwide",description='**Total** : {}  \n **Deaths** : {} \n **Cured** : {} \n **Active Cases** : \n > Mid Condition : {} \n > Critical condition : {}'.format(check_length(results['worldwide_cases']['total_cases']['infected']),check_length(results['worldwide_cases']['total_cases']['deaths'],format(int(results['worldwide_cases']['total_cases']['deaths'].replace(',',''))*100/int(results['worldwide_cases']['total_cases']['infected'].replace(',','')),'.2f') if not check_length(results['worldwide_cases']['total_cases']['deaths']) == 'None' else None),check_length(results['worldwide_cases']['total_cases']['cured'],format(int(results['worldwide_cases']['total_cases']['cured'].replace(',',''))*100/int(results['worldwide_cases']['total_cases']['infected'].replace(',','')),'.2f') if not check_length(results['worldwide_cases']['total_cases']['cured']) == 'None' else None),check_length(results['worldwide_cases']['total_cases']['active_cases']['mid_condition'],format(int(results['worldwide_cases']['total_cases']['active_cases']['mid_condition'].replace(',',''))*100/int(results['worldwide_cases']['total_cases']['infected'].replace(',','')),'.2f') if not check_length(results['worldwide_cases']['total_cases']['active_cases']['mid_condition']) == 'None' else None),check_length(results['worldwide_cases']['total_cases']['active_cases']['critical_condition'],format(int(results['worldwide_cases']['total_cases']['active_cases']['critical_condition'].replace(',',''))*100/int(results['worldwide_cases']['total_cases']['infected'].replace(',','')),'.2f') if not check_length(results['worldwide_cases']['total_cases']['active_cases']['critical_condition']) == 'None' else None)) ,  color=discord.Colour(value=16730698))
-          embed.set_footer(text=cr,icon_url=self.client.user.avatar_url)
-          embed.set_thumbnail(url='https://cdn.discordapp.com/attachments/686666564589846625/688494381027688480/caution-icon-png-14-original.png')
-          file = discord.File("pie.png", filename="image.png")
-          embed.set_image(url="attachment://image.png")
-          await ctx.send(embed=embed,file=file)
-          return
+          async with ctx.typing():
+              import matplotlib.pyplot as plt
+              plt.rcParams.update({'text.color' : "white",'axes.labelcolor' : "white"})
+              labels = 'Deaths', 'Cured' , 'Mid condition'
+              sizes = [int(results['worldwide_cases']['total_cases']['deaths'].replace(',','')),int(results['worldwide_cases']['total_cases']['cured'].replace(',','')),int(results['worldwide_cases']['total_cases']['active_cases']['mid_condition'].replace(',',''))]
+              colors = ['#ff5151', '#76ff46' , 'orange']
+              explode = (0, 0 , 0) 
+              plt.pie(sizes, explode=explode, labels=labels, colors=colors, autopct='%1.0f%%')
+              plt.axis('equal')
+              plt.savefig('pie.png', bbox_inches='tight' , transparent=True)
+              embed=discord.Embed(title="Infections worldwide",description='**Total** : {}  \n **Deaths** : {} \n **Cured** : {} \n **Active Cases** : \n > Mid Condition : {} \n > Critical condition : {}'.format(check_length(results['worldwide_cases']['total_cases']['infected']),check_length(results['worldwide_cases']['total_cases']['deaths'],format(int(results['worldwide_cases']['total_cases']['deaths'].replace(',',''))*100/int(results['worldwide_cases']['total_cases']['infected'].replace(',','')),'.2f') if not check_length(results['worldwide_cases']['total_cases']['deaths']) == 'None' else None),check_length(results['worldwide_cases']['total_cases']['cured'],format(int(results['worldwide_cases']['total_cases']['cured'].replace(',',''))*100/int(results['worldwide_cases']['total_cases']['infected'].replace(',','')),'.2f') if not check_length(results['worldwide_cases']['total_cases']['cured']) == 'None' else None),check_length(results['worldwide_cases']['total_cases']['active_cases']['mid_condition'],format(int(results['worldwide_cases']['total_cases']['active_cases']['mid_condition'].replace(',',''))*100/int(results['worldwide_cases']['total_cases']['infected'].replace(',','')),'.2f') if not check_length(results['worldwide_cases']['total_cases']['active_cases']['mid_condition']) == 'None' else None),check_length(results['worldwide_cases']['total_cases']['active_cases']['critical_condition'],format(int(results['worldwide_cases']['total_cases']['active_cases']['critical_condition'].replace(',',''))*100/int(results['worldwide_cases']['total_cases']['infected'].replace(',','')),'.2f') if not check_length(results['worldwide_cases']['total_cases']['active_cases']['critical_condition']) == 'None' else None)) ,  color=discord.Colour(value=16730698))
+              embed.set_footer(text=cr,icon_url=self.client.user.avatar_url)
+              embed.set_thumbnail(url='https://cdn.discordapp.com/attachments/686666564589846625/688494381027688480/caution-icon-png-14-original.png')
+              file = discord.File("pie.png", filename="image.png")
+              embed.set_image(url="attachment://image.png")
+              await ctx.send(embed=embed,file=file)
+              return
         c = []
         countries = get_infected_countries()
         for countr in countries:
@@ -280,4 +280,4 @@ class CoronaCog(commands.Cog):
         embed.set_footer(text=cr,icon_url=self.client.user.avatar_url)
         await ctx.send(embed=embed,file=file)
 def setup(client):
-  client.add_cog(CoronaCog(client))
+  client.add_cog(Corona(client))
