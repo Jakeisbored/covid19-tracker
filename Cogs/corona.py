@@ -138,7 +138,7 @@ def check_length(query , extra=None , special=False):
 class Corona(commands.Cog):
   def __init__(self, client):
      self.client = client
-  @commands.command(brief='Search for an arg in the infected countries',description='Search for an arg in the infected countries , if no arg is given the list of infected countries is returned')
+  @commands.command(brief='Search for an arg in the infected countries',description='Search for an arg in the infected countries , if no arg is given the list of infected countries is returned' , usage='search_country [country_name]' , aliases=['sc','search'])
   async def search_country(self,ctx,search_args:str=None):
         sep = ' , '
         if (search_args == None):
@@ -161,15 +161,14 @@ class Corona(commands.Cog):
           embed.description = '**{}** \n **{}** total results'.format('No results were found' if len(c)<1 else sep.join(c)[:2000],str(len(c)))
           await ctx.send(embed=embed) 
           return  
-  @commands.command(brief='Get symptoms of COVID19',description='Get symptoms of COVID19')
+  @commands.command(brief='Get symptoms of COVID19',description='Get symptoms of COVID19' , usage='symptoms')
   async def symptoms(self,ctx):
       embed=discord.Embed(title="COVID19 Symptoms")
       embed.set_footer(text=cr,icon_url=self.client.user.avatar_url)
       embed.set_image(url='https://www.worldometers.info/img/coronavirus--symptoms-table-wang-jama-02072020-reduced.png')
       await ctx.send(embed=embed)
-  @commands.command(brief='Get infections in a specific country',description='Get infections in a specific country')
+  @commands.command(brief='Get infections in a specific country',description='Get infections in a specific country , if no arg is given the world sum is returned',usage='infections [country_name]',aliases=['inf'])
   async def infections(self,ctx,country:str=None):
-      try:
         if(country == None):
           results= get_infections()
           async with ctx.typing():
@@ -196,15 +195,20 @@ class Corona(commands.Cog):
               if(country.lower() in countr.lower()): 
                 c.append(countr)
           country = None if len(c) < 1 else c[0]
-          results = get_infections_by_name(country)
+          try:
+            results = get_infections_by_name(country)
+          except Exception as e:
+            embed=discord.Embed(title="Error : Not found",description='**{}** was not found on the infected countries'.format(country),  color=discord.Colour(value=16730698))
+            embed.set_footer(text=cr,icon_url=self.client.user.avatar_url)
+            await ctx.send(embed=embed)
+            return
           embed=discord.Embed(title="Infections in {}".format(country),description='**Total** : {}  \n **Deaths** : {} \n **Cured** : {} \n **New cases** : {} \n **Critical cases** : {} \n **New deaths** : {} \n **Active cases** : {}'.format(check_length(results[country]['total_cases']),check_length(results[country]['total_deaths'],format(int(results[country]['total_deaths'].replace(',',''))*100/int(results[country]['total_cases'].replace(',','')),'.2f') if not check_length(results[country]['total_deaths']) == 'None' else None),check_length(results[country]['total_recovered'],format(int(results[country]['total_recovered'].replace(',',''))*100/int(results[country]['total_cases'].replace(',','')),'.2f') if not check_length(results[country]['total_recovered']) == 'None' else None),check_length(results[country]['new_cases'],format(int(results[country]['new_cases'].replace(',','').replace('+',''))*100/int(results[country]['total_cases'].replace(',','')),'.2f') if not check_length(results[country]['new_cases']) == 'None' else None,True),check_length(results[country]['critical_cases'],format(int(results[country]['critical_cases'].replace(',',''))*100/int(results[country]['total_cases'].replace(',','')),'.2f') if not check_length(results[country]['critical_cases']) == 'None' else None),check_length(results[country]['new_deaths'],format(int(results[country]['new_deaths'].replace(',','').replace('+',''))*100/int(results[country]['total_deaths'].replace(',','')),'.2f') if not check_length(results[country]['new_deaths']) == 'None' else None,True),check_length(results[country]['active_cases'],format(int(results[country]['active_cases'].replace(',',''))*100/int(results[country]['total_cases'].replace(',','')),'.2f') if not check_length(results[country]['active_cases']) == 'None' else None)) ,  color=discord.Colour(value=16730698))
           embed.set_footer(text=cr,icon_url=self.client.user.avatar_url)
           embed.set_thumbnail(url='https://cdn.discordapp.com/attachments/686666564589846625/688494381027688480/caution-icon-png-14-original.png')
           await ctx.send(embed=embed)
           return
-      except Exception as e:
-        await ctx.send(str(e))
-  @commands.command(brief='Get latest info about COVID19 (Updates every 24 hours)',description='Get latest info about COVID19 (Updates every 24 hours)')
+
+  @commands.command(brief='Get latest info about COVID19 (Updates every 24 hours)',description='Get latest info about COVID19 (Updates every 24 hours)', usage='latest_news' , aliases=['ln','latest_info','news'])
   async def latest_news(self,ctx):
         async with ctx.typing():
           out = [(get_latest_info()['info'][i:i+2048]) for i in range(0, len(get_latest_info()['info']), 2048)]
