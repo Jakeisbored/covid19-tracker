@@ -187,6 +187,7 @@ class Corona(commands.Cog):
               file = discord.File("pie.png", filename="image.png")
               embed.set_image(url="attachment://image.png")
               await ctx.send(embed=embed,file=file)
+              plt.clf()
               return
         async with ctx.typing():
           c = []
@@ -217,6 +218,7 @@ class Corona(commands.Cog):
           file = discord.File("country_pie.png", filename="image.png")
           embed.set_image(url="attachment://image.png")
           await ctx.send(embed=embed,file=file)
+          plt.clf()
           return
 
   @commands.command(brief='Get latest info about COVID19 (Updates every 24 hours)',description='Get latest info about COVID19 (Updates every 24 hours)', usage='latest_news' , aliases=['ln','latest_info','news'])
