@@ -25,7 +25,7 @@ class Util(commands.Cog):
              help=discord.Embed(title='Showing info about : {}'.format(cmd),description='**<>** is required \n **[]** is optional',color=discord.Colour(value=16730698))
              help.add_field(name='Full description:',value='`{}`'.format(y.description if y.description else 'No full description was found'),inline=True)
              help.add_field(name='Usage:',value='`{}`'.format(y.usage if y.usage else 'No proper usage was found'),inline=True)
-             help.add_field(name='Aliases:',value='`{}`'.format(sep.join(y.aliases) if len(y.aliases) > 1 else 'No proper aliases were found'),inline=True)
+             help.add_field(name='Aliases:',value='`{}`'.format(sep.join(y.aliases) if y.aliases else 'No proper aliases were found'),inline=True)
              help.set_footer(text=cr,icon_url=self.client.user.avatar_url)
              await ctx.send(embed=help)
              return
