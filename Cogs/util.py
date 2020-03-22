@@ -6,7 +6,7 @@ cr = "Powered by discord.py and Jake's brain"
 class Util(commands.Cog):
   def __init__(self,client):
     self.client = client
-  @commands.command()
+  @commands.command(name='help',description='Displays this menu',brief='Displays this menu',usage='help [command_name]',aliases=['aide'])
   async def help(self,ctx,cmd:str=None):
     user = self.client.get_user("480407581085532180")
     if cmd == None:
@@ -21,7 +21,11 @@ class Util(commands.Cog):
     else:
        for y in self.client.walk_commands():
           if y.name == cmd:
-             help=discord.Embed(title='Showing info about : {}'.format(cmd),description='Full Description : **{}**\n Brief Description : **{}** \n Usage : **{}**'.format(y.description if y.description else 'No full description was found',y.brief if y.brief else 'No brief description was found',y.usage if y.usage else 'No proper usage was found'),color=discord.Colour(value=16730698))
+             sep = ' - '
+             help=discord.Embed(title='Showing info about : {}'.format(cmd),description='**<>** is required \n **[]** is optional',color=discord.Colour(value=16730698))
+             help.add_field(name='Full description:',value='`{}`'.format(y.description if y.description else 'No full description was found'),inline=True)
+             help.add_field(name='Usage:',value='`{}`'.format(y.usage if y.usage else 'No proper usage was found'),inline=True)
+             help.add_field(name='Aliases:',value='`{}`'.format(sep.join(y.aliases) if len(y.aliases) > 1 else 'No proper aliases were found'),inline=True)
              help.set_footer(text=cr,icon_url=self.client.user.avatar_url)
              await ctx.send(embed=help)
              return
