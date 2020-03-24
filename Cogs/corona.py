@@ -2,7 +2,6 @@ import discord
 from discord.ext import commands
 from bs4 import BeautifulSoup
 import requests
-from functions import get_world_infections
 main_endpoint = 'https://www.worldometers.info/coronavirus/{}'
 cr = "Powered by discord.py and Jake's brain"
 def get_stats(type):
@@ -139,23 +138,6 @@ def check_length(query , extra=None , special=False):
 class Corona(commands.Cog):
   def __init__(self, client):
      self.client = client
-     self.info = {
-	'footer_text' : f'Made by',
-	'colors' : {
-	 'red' : discord.Colour(value=16730698),
-	 'light_red' : '#ff5151',
-	 'light_green' : '#76ff46'
-	           }
-	}
-  @commands.command(brief='Get current infections worldwide or by country identifier' , description='Get current infections worldwide or by country identifier , a country identifier is either a country code (DZ) , id (1) or a country name (Algeria) . Ids and country codes can be viewed in the **country_key** command.',usage='infections [country_identifier]')
-  async def test(self,ctx,country_identifier:str or int=None):
-    data = get_world_infections()
-    inf_embed = discord.Embed(title='Infections worldwide',color=self.info['colors']['red'])
-    inf_embed.set_author(name=self.client.user.name,icon_url=self.client.user.avatar_url)
-	#inf_embed.set_footer(text=f'Issued by {ctx.message.author.user.name}',icon_url=ctx.message.author.user.avatar_url)
-    for elem in data['latest']:
-       inf_embed.add_field(name=f'{elem}:',value='`{}`'.format(data['latest'][elem]) , inline=True)
-    await ctx.send(embed=inf_embed)
   @commands.command(brief='Search for an arg in the infected countries',description='Search for an arg in the infected countries , if no arg is given the list of infected countries is returned' , usage='search_country [country_name]' , aliases=['sc','search'])
   async def search_country(self,ctx,search_args:str=None):
         sep = ' , '
@@ -221,22 +203,10 @@ class Corona(commands.Cog):
             embed.set_footer(text=cr,icon_url=self.client.user.avatar_url)
             await ctx.send(embed=embed)
             return
-          import matplotlib.pyplot as plt
-          plt.rcParams.update({'text.color' : "white",'axes.labelcolor' : "white"})
-          labels = 'Deaths', 'Cured' , 'Critical condition'
-          sizes = [int(results[country]['total_deaths'].replace(',','')),int(results[country]['total_recovered'].replace(',','')),int(results[country]['critical_cases'].replace(',',''))]
-          colors = ['#ff5151', '#76ff46' , 'orange']
-          explode = (0, 0 , 0) 
-          plt.pie(sizes, explode=explode, labels=labels, colors=colors, autopct='%1.0f%%')
-          plt.axis('equal')
-          plt.savefig('country_pie.png', bbox_inches='tight' , transparent=True)
           embed=discord.Embed(title="Infections in {}".format(country),description='**Total** : {}  \n **Deaths** : {} \n **Cured** : {} \n **New cases** : {} \n **Critical cases** : {} \n **New deaths** : {} \n **Active cases** : {}'.format(check_length(results[country]['total_cases']),check_length(results[country]['total_deaths'],format(int(results[country]['total_deaths'].replace(',',''))*100/int(results[country]['total_cases'].replace(',','')),'.2f') if not check_length(results[country]['total_deaths']) == 'None' else None),check_length(results[country]['total_recovered'],format(int(results[country]['total_recovered'].replace(',',''))*100/int(results[country]['total_cases'].replace(',','')),'.2f') if not check_length(results[country]['total_recovered']) == 'None' else None),check_length(results[country]['new_cases'],format(int(results[country]['new_cases'].replace(',','').replace('+',''))*100/int(results[country]['total_cases'].replace(',','')),'.2f') if not check_length(results[country]['new_cases']) == 'None' else None,True),check_length(results[country]['critical_cases'],format(int(results[country]['critical_cases'].replace(',',''))*100/int(results[country]['total_cases'].replace(',','')),'.2f') if not check_length(results[country]['critical_cases']) == 'None' else None),check_length(results[country]['new_deaths'],format(int(results[country]['new_deaths'].replace(',','').replace('+',''))*100/int(results[country]['total_deaths'].replace(',','')),'.2f') if not check_length(results[country]['new_deaths']) == 'None' else None,True),check_length(results[country]['active_cases'],format(int(results[country]['active_cases'].replace(',',''))*100/int(results[country]['total_cases'].replace(',','')),'.2f') if not check_length(results[country]['active_cases']) == 'None' else None)) ,  color=discord.Colour(value=16730698))
           embed.set_footer(text=cr,icon_url=self.client.user.avatar_url)
           embed.set_thumbnail(url='https://cdn.discordapp.com/attachments/686666564589846625/688494381027688480/caution-icon-png-14-original.png')
-          file = discord.File("country_pie.png", filename="image.png")
-          embed.set_image(url="attachment://image.png")
           await ctx.send(embed=embed,file=file)
-          plt.clf()
           return
 
   @commands.command(brief='Get latest info about COVID19 (Updates every 24 hours)',description='Get latest info about COVID19 (Updates every 24 hours)', usage='latest_news' , aliases=['ln','latest_info','news'])
