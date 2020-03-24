@@ -138,14 +138,14 @@ def check_length(query , extra=None , special=False):
 class Corona(commands.Cog):
   def __init__(self, client):
      self.client = client
-		  self.info = {
-		    'footer_text' : f'Made by',
-		    'colors' : {
-		        'red' : discord.Colour(value=16730698),
-		        'light_red' : '#ff5151',
-		        'light_green' : '#76ff46'
-		     }
-		        }
+     self.info = {
+	'footer_text' : f'Made by',
+	'colors' : {
+	 'red' : discord.Colour(value=16730698),
+	 'light_red' : '#ff5151',
+	 'light_green' : '#76ff46'
+	}
+	}
   @commands.command(brief='Get current infections worldwide or by country identifier' , description='Get current infections worldwide or by country identifier , a country identifier is either a country code (DZ) , id (1) or a country name (Algeria) . Ids and country codes can be viewed in the **country_key** command.',usage='infections [country_identifier]')
 	async def test(self,ctx,country_identifier:str or int=None):
 		data = get_world_infections()
