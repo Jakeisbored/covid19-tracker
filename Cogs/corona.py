@@ -2,6 +2,7 @@ import discord
 from discord.ext import commands
 from bs4 import BeautifulSoup
 import requests
+from functions import get_world_infections
 main_endpoint = 'https://www.worldometers.info/coronavirus/{}'
 cr = "Powered by discord.py and Jake's brain"
 def get_stats(type):
