@@ -144,7 +144,7 @@ class Corona(commands.Cog):
 	 'red' : discord.Colour(value=16730698),
 	 'light_red' : '#ff5151',
 	 'light_green' : '#76ff46'
-	}
+	           }
 	}
   @commands.command(brief='Get current infections worldwide or by country identifier' , description='Get current infections worldwide or by country identifier , a country identifier is either a country code (DZ) , id (1) or a country name (Algeria) . Ids and country codes can be viewed in the **country_key** command.',usage='infections [country_identifier]')
   async def test(self,ctx,country_identifier:str or int=None):
@@ -153,7 +153,7 @@ class Corona(commands.Cog):
 	inf_embed.set_author(name=self.client.user.name,icon_url=self.client.user.avatar_url)
 	#inf_embed.set_footer(text=f'Issued by {ctx.message.author.user.name}',icon_url=ctx.message.author.user.avatar_url)
 	for elem in data['latest']:
-	    inf_embed.add_field(name=f'{elem}:',value='`{}`'.format(data['latest'][elem]) , inline=True)
+	  inf_embed.add_field(name=f'{elem}:',value='`{}`'.format(data['latest'][elem]) , inline=True)
 	await ctx.send(embed=inf_embed)
   @commands.command(brief='Search for an arg in the infected countries',description='Search for an arg in the infected countries , if no arg is given the list of infected countries is returned' , usage='search_country [country_name]' , aliases=['sc','search'])
   async def search_country(self,ctx,search_args:str=None):
