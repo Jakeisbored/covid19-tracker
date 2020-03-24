@@ -147,7 +147,7 @@ class Corona(commands.Cog):
 	}
 	}
   @commands.command(brief='Get current infections worldwide or by country identifier' , description='Get current infections worldwide or by country identifier , a country identifier is either a country code (DZ) , id (1) or a country name (Algeria) . Ids and country codes can be viewed in the **country_key** command.',usage='infections [country_identifier]')
-	async def test(self,ctx,country_identifier:str or int=None):
+  async def test(self,ctx,country_identifier:str or int=None):
 		data = get_world_infections()
 		inf_embed = discord.Embed(title='Infections worldwide',color=self.info['colors']['red'])
 		inf_embed.set_author(name=self.client.user.name,icon_url=self.client.user.avatar_url)
