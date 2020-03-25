@@ -1,24 +1,22 @@
+# Modules
 import discord
 from discord.ext import commands
-import sys, traceback
-
-
-def get_prefix(client, message):
-    prefixes = ['covid ', 'c!']
-    return commands.when_mentioned_or(*prefixes)(client, message)
-initial_extensions = ['Cogs.corona','Cogs.util']
-
-client = commands.Bot(command_prefix=get_prefix, description='A covid 19 tracking bot')
+# Prefix getter
+def get_prefix(client,message):
+	prefixes = ['c!','covid ']
+	return commands.when_mentioned_or(*prefixes)(client,message)
+# Client and removing the default help
+client= commands.Bot(description='A COVID19 tracking bot !',command_prefix=get_prefix)
 client.remove_command('help')
-# Here we load our extensions(cogs) listed above in [initial_extensions].
-if __name__ == '__main__':
-    for extension in initial_extensions:
-        client.load_extension(extension)
-
+# Importing the cogs
+cogs = ['Cogs.corona']
+for cog in cogs:
+	if __name__ == '__main__':
+		client.load_extension(cog)
+# Ready event
 @client.event
 async def on_ready():
-    print(f'\n\nLogged in as: {client.user.name} - {client.user.id}\nVersion: {discord.__version__}\n')
-    await client.change_presence(game=discord.Game(name='latest covid19 news', type=2))
-    print(f'Successfully logged in and booted...!')
-
+	print(f'{client.user.name}#{client.user.discriminator} is up and runing')
+	await client.change_presence(activity=discord.Game('c!help'))
+# Login
 client.run('NTc2MTEzNjg5MzI1NzMxODky.Xm96Aw.TcQZx4WcGY3B_dXf8Fd4GMA3nRo')
