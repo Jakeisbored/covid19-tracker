@@ -9,7 +9,7 @@ def get_prefix(client,message):
 client= commands.Bot(description='A COVID19 tracking bot !',command_prefix=get_prefix)
 client.remove_command('help')
 # Importing the cogs
-cogs = ['Cogs.corona']
+cogs = ['Cogs.corona','Cogs.util']
 for cog in cogs:
 	if __name__ == '__main__':
 		client.load_extension(cog)
