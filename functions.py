@@ -2,6 +2,8 @@ from requests import get
 from json import loads
 from bs4 import BeautifulSoup
 from math import floor
+import discord
+from datetime import datetime
 endpoint_v1 = 'https://www.worldometers.info/coronavirus/#countries'
 html = BeautifulSoup(get(endpoint_v1).content , 'html.parser')
 # Not found class
@@ -9,6 +11,25 @@ class NotFound(Exception):
 	"""Represents a NotFound exception"""
 	pass
 
+# The info dict
+info = {
+		'footer_text' : f'Made possible by discord.py and Jake. {datetime.now()}',
+		'colors' : {
+		'red' : discord.Colour(value=16730698),
+		'light_red' : '#ff5151',
+		'light_green' : '#76ff46'
+				}
+		}
+# Construct the embed
+def construct_embed(parent_class,title:str,description:str=None,fields:list=None,author:dict=None):
+	embed = parent_class(title=title,description=description,color=info['colors']['red']) if description else parent_class(title=title,color=info['colors']['red'])
+	embed.set_footer(text=info['footer_text'])
+	if author:
+		embed.set_author(name=author['name'],icon_url=author['icon_url'])
+	if fields:
+		for field in fields:
+			embed.add_field(name=field['name'],value=field['value'],inline=field['inline'])
+	return embed
 # Generate percentage
 def get_percentage(base_integer:int,total_integer:int):
 	return floor(base_integer * 100 / total_integer)
@@ -51,3 +72,15 @@ def get_overall_status():
 	for (index,child) in enumerate(html.find_all('span',{'class':'number-table'})[:2]):
 		data[second_labels[index]] = int(child.getText().strip().replace(',',''))
 	return data
+ 	
+# Get the infected country list
+def get_country_list ():
+	country_list = []
+	for tr in html.find('tbody').find_all('tr'):
+		for (index,td) in enumerate(tr.find_all('td')):
+			if (index == 0) :
+				country_key = td.getText().strip()
+				country_list.append(country_key)
+	return country_list
+
+
