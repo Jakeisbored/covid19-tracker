@@ -19,7 +19,7 @@ class Corona(commands.Cog):
 			plt.savefig(transparent=True,fname='world_pie.png',bbox_inches='tight')
 			world_pie = discord.File("world_pie.png",filename='world_pie.png')
 			plt.clf()
-			await ctx.send(embed=construct_embed(title='Infections worldwide',fields=[{'name' : '{}:'.format(elem.capitalize().replace('_',' ')) , 'value' : '`{}`'.format('{} ({} %)'.format(data[elem],get_percentage(data[elem],data['total'])) if elem in ['deaths','active','recovered'] else data[elem]) , 'inline' : True} for elem in data]))
+			await ctx.send(embed=construct_embed(discord.Embed,title='Infections worldwide',fields=[{'name' : '{}:'.format(elem.capitalize().replace('_',' ')) , 'value' : '`{}`'.format('{} ({} %)'.format(data[elem],get_percentage(data[elem],data['total'])) if elem in ['deaths','active','recovered'] else data[elem]) , 'inline' : True} for elem in data]))
 			await ctx.send(file=world_pie)
 		else:
 			try:
