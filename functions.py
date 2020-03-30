@@ -13,7 +13,7 @@ class NotFound(Exception):
 
 # The info dict
 info = {
-		'footer_text' : f'Made possible by discord.py and Jake. {datetime.now()}',
+		'footer_text' : 'Made possible by discord.py and Jake.',
 		'colors' : {
 		'red' : discord.Colour(value=16730698),
 		'light_red' : '#ff5151',
@@ -22,7 +22,7 @@ info = {
 		}
 # Construct the embed
 def construct_embed(parent_class,title:str,description:str=None,fields:list=None,author:dict=None):
-	embed = parent_class(title=title,description=description,color=info['colors']['red']) if description else parent_class(title=title,color=info['colors']['red'])
+	embed = parent_class(timestamp=datetime.now(),title=title,description=description,color=info['colors']['red']) if description else parent_class(title=title,color=info['colors']['red'])
 	embed.set_footer(text=info['footer_text'])
 	if author:
 		embed.set_author(name=author['name'],icon_url=author['icon_url'])
