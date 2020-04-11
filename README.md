@@ -5,9 +5,8 @@
 <p align="center">
   A fast and powerfull yet simple discord.py and bs4/requests based bot to retrieve worldwide infections/ country infections . Supports charts ( pies ) 
   Im too lazy to add other features so im going to leave that for you ¯\_(ツ)_/¯
-  ## Contributing [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/dwyl/esta/issues)
 </p>
-
+  ## Contributing [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/dwyl/esta/issues)
 # Features
 - Simple to use.
 - Uses charts to visualize data.
