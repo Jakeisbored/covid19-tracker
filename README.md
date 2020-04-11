@@ -1,6 +1,6 @@
 
 <p align="center">
-   <img src="https://cdn.discordapp.com/avatars/576113689325731892/d9ea307663388e533b96d0e750b89a8a.png?size=1024" alt="Header" width="50" height="50">
+   <img src="https://cdn.discordapp.com/avatars/576113689325731892/d9ea307663388e533b96d0e750b89a8a.png?size=1024" alt="Header" width="200" height="200">
 </p>
 
 <p align="center">
@@ -18,9 +18,9 @@ Use the prebuilt and hosted bot by me , it will save you time . Invite it [here]
 
 Open an issue or a pr here on github , or come to my discord server :)
 
-<p align="center">
+
   <iframe src="https://discordapp.com/widget?id=504326398287020035&theme=dark" width="350" height="500" allowtransparency="true" frameborder="0"></iframe>
-</p>
+
 
 
 # TODO
