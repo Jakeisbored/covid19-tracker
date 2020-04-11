@@ -1,4 +1,5 @@
 # Modules
+import os
 import discord
 from discord.ext import commands
 # Prefix getter
@@ -19,4 +20,4 @@ async def on_ready():
 	print(f'{client.user.name}#{client.user.discriminator} is up and runing')
 	await client.change_presence(activity=discord.Game('c!help'))
 # Login
-client.run('NTc2MTEzNjg5MzI1NzMxODky.Xm96Aw.TcQZx4WcGY3B_dXf8Fd4GMA3nRo')
+client.run(os.environ['token'])
