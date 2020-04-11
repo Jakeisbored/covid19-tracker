@@ -37,7 +37,7 @@ def get_percentage(base_integer:int,total_integer:int):
 # Worldwide infections
 def get_world_infections():
 	infections = {}
-	labels = ['country','cases','total','deaths','new_deaths','recovered','active','serious','total_per_million','deaths_per_million']
+	labels = ['country','cases','total','deaths','new_deaths','recovered','active','serious','total_per_million','deaths_per_million' , 'total_tests' , 'tests_per_million']
 	for tr in html.find('tbody').find_all('tr'):
 		for (index,td) in enumerate(tr.find_all('td')):
 			if (index == 0) :
@@ -50,7 +50,7 @@ def get_world_infections():
 # Country filtered infections
 def get_country_infections(country:str=None):
 	infections = {}
-	labels = ['country','cases','new_cases','deaths','new_deaths','recovered','active','serious','total_per_million','deaths_per_million' , 'reported_first_case' , 'total_tests' , 'tests_per_million']
+	labels = ['country','cases','new_cases','deaths','new_deaths','recovered','active','serious','total_per_million','deaths_per_million' , 'total_tests' , 'tests_per_million']
 	for tr in html.find('tbody').find_all('tr'):
 		for (index,td) in enumerate(tr.find_all('td')):
 			if (index == 0) :
