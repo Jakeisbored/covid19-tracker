@@ -16,6 +16,7 @@
 - Uses inbuilt functions that scrapes data directly from [world meters](https://www.worldometers.info/coronavirus/) , no api's used
 - Shows data in a nice and tidy embed 
 - Fast response rates
+
 # Getting started
 Use the prebuilt and hosted bot by me , it will save you time . Invite it [here](https://discordapp.com/api/oauth2/authorize?client_id=576113689325731892&permissions=8&scope=bot)
 1. CLone this repo using git or downloading it as a zip
@@ -31,3 +32,5 @@ Open an issue or a pr here on github , or come to my [discord server](https://di
 - Add an alert system ¯\_(ツ)_/¯
 
 # Disclaimer
+
+Built by Jake.#0019 on discord , rights for the data reserved to [worldmeters](https://www.worldometers.info/coronavirus/)
